@@ -1,0 +1,8 @@
+{
+	"action":"com.ltu.fm.action.user.QueryRadiusAction",
+	"body":{
+	    "radiusInMeter":"200000",
+	    "lat":"10.938616",
+	    "lng":"106.764804"
+	}
+}
