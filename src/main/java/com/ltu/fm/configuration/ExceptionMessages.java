@@ -155,4 +155,7 @@ public class ExceptionMessages {
     
     //General
     public static final String EX_UNDER_DEVELOPMENT = "This feature is currently under development";
+    
+    //Location
+    public static final String EX_LOCATION_NOT_FOUND = "Location not found.";
 }

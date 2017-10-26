@@ -24,6 +24,9 @@ public class DynamoDBConfiguration {
     // TODO: Specify the name of the Users table in DynamoDB
     public static final String USERS_TABLE_NAME = "fm_users";
     
+    /** The Constant LOCATION_TABLE_NAME. */
+    public static final String LOCATION_TABLE_NAME = "fm_location";
+    
     /** The Constant USER_POINT_TABLE_NAME. */
     public static final String USER_POINT_TABLE_NAME = "fm_user_point";
     
