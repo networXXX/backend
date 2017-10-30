@@ -1,3 +1,15 @@
+/*
+ * Copyright 2017 ltu.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance
+ * with the License. A copy of the License is located at
+ *
+ * http://ltu.com/apache2.0/
+ *
+ * or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
+ * and limitations under the License.
+ */
 package com.ltu.fm.action.user;
 
 import java.security.NoSuchAlgorithmException;
@@ -20,8 +32,6 @@ import com.ltu.fm.exception.InternalErrorException;
 import com.ltu.fm.helper.PasswordHelper;
 import com.ltu.fm.model.action.user.LoginUserRequest;
 import com.ltu.fm.model.action.user.LoginUserResponse;
-import com.ltu.fm.model.device.Device;
-import com.ltu.fm.model.device.DeviceDAO;
 import com.ltu.fm.model.user.User;
 import com.ltu.fm.model.user.UserCredentials;
 import com.ltu.fm.model.user.UserDAO;
@@ -39,7 +49,8 @@ public class LoginAction extends AbstractLambdaAction{
 	
 	private CredentialsProvider cognito = ProviderFactory.getCredentialsProvider();
 
-    public String handle(JsonObject request, Context lambdaContext) throws BadRequestException, InternalErrorException {
+    @Override
+	public String handle(JsonObject request, Context lambdaContext) throws BadRequestException, InternalErrorException {
     	logger = lambdaContext.getLogger();
 
         LoginUserRequest input = getGson().fromJson(request, LoginUserRequest.class);
@@ -82,7 +93,7 @@ public class LoginAction extends AbstractLambdaAction{
         }
         
         //Update device
-        updateDevice(input, loggedUser.getId());
+        //updateDevice(input, loggedUser.getId());
 
         //Output token
         TokenProvider provider = TokenProvider.getInstance();
@@ -109,23 +120,6 @@ public class LoginAction extends AbstractLambdaAction{
     	output.setItem(loggedUser);
     	output.setAuth(auth);
         return getGsonExcludeFields().toJson(output);
-    }
-    
-    private void updateDevice(LoginUserRequest input, String userId) throws InternalErrorException{
-    	if (input.getPhoneId() != null) {
-    		try {
-    			DeviceDAO deviceDAO = DAOFactory.getDeviceDAO();
-				Device device = deviceDAO.findByPhoneId(input.getPhoneId());
-				if (device != null) {
-					device.setLastLoginUserId(userId);
-					//device.setPushToken(input.getPushToken());
-					deviceDAO.update(device);
-				}
-			} catch (DAOException e) {
-				logger.log("Erro updating device.\n" + e.getMessage());
-	            throw new InternalErrorException(ExceptionMessages.EX_UPDATE_DEVICE);
-			}
-		}
     }
     
 }

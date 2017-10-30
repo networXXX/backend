@@ -22,20 +22,13 @@ public class DynamoDBConfiguration {
     
     /** The Constant USERS_TABLE_NAME. */
     // TODO: Specify the name of the Users table in DynamoDB
-    public static final String USERS_TABLE_NAME = "fm_users";
+    public static final String USERS_TABLE_NAME = "nx_users";
     
     /** The Constant LOCATION_TABLE_NAME. */
-    public static final String LOCATION_TABLE_NAME = "fm_location";
+    public static final String LOCATION_TABLE_NAME = "nx_location";
     
     /** The Constant USER_POINT_TABLE_NAME. */
-    public static final String USER_POINT_TABLE_NAME = "fm_user_point";
-    
-    /** The Constant PET_TABLE_NAME. */
-    // TODO: Specify the name of the Pet table in DynamoDB
-    public static final String PET_TABLE_NAME = "fm_pets";
-    
-    /** The Constant DEVICE_TABLE_NAME. */
-    public static final String DEVICE_TABLE_NAME = "fm_devices";
+    public static final String USER_POINT_TABLE_NAME = "nx_user_point";
     
     /** The Constant SCAN_LIMIT. */
     public static final int SCAN_LIMIT = 50;

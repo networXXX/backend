@@ -1,10 +1,10 @@
 /*
- * Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017 ltu.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance
  * with the License. A copy of the License is located at
  *
- * http://aws.amazon.com/apache2.0/
+ * http://ltu.com/apache2.0/
  *
  * or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
  * OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
@@ -12,20 +12,23 @@
  */
 package com.ltu.fm.dao.factory;
 
-import com.ltu.fm.model.device.DDBDeviceDAO;
-import com.ltu.fm.model.device.DeviceDAO;
 import com.ltu.fm.model.geo.DDBUserPointDAO;
 import com.ltu.fm.model.geo.UserPointDAO;
+import com.ltu.fm.model.location.DDBLocationDAO;
+import com.ltu.fm.model.location.LocationDAO;
 import com.ltu.fm.model.user.DDBUserDAO;
 import com.ltu.fm.model.user.UserDAO;
 
-// TODO: Auto-generated Javadoc
 /**
  * The DAO Factory object to abstract the implementation of DAO interfaces.
  */
 public class DAOFactory {
+    
     /**
      * Contains the implementations of the DAO objects. By default we only have a DynamoDB implementation
+     *
+     * @author FPT LA
+     * @date Oct 29, 2017
      */
     public enum DAOType {
         
@@ -59,10 +62,21 @@ public class DAOFactory {
         return dao;
     }
     
+    /**
+     * Gets the user point DAO.
+     *
+     * @return the user point DAO
+     */
     public static UserPointDAO getUserPointDAO() {
         return getUserPointDAO(DAOType.DynamoDB);
     }
 
+    /**
+     * Gets the user point DAO.
+     *
+     * @param daoType the dao type
+     * @return the user point DAO
+     */
     public static UserPointDAO getUserPointDAO(DAOType daoType) {
     	UserPointDAO dao = null;
         switch (daoType) {
@@ -75,29 +89,29 @@ public class DAOFactory {
     }
     
     /**
-     * Gets the device dao.
+     * Gets the location DAO.
      *
-     * @return the device dao
+     * @return the location DAO
      */
-    public static DeviceDAO getDeviceDAO() {
-        return getDeviceDAO(DAOType.DynamoDB);
+    public static LocationDAO getLocationDAO() {
+        return getLocationDAO(DAOType.DynamoDB);
     }
 
     /**
-     * Gets the device dao.
+     * Gets the location DAO.
      *
      * @param daoType the dao type
-     * @return the device dao
+     * @return the location DAO
      */
-    public static DeviceDAO getDeviceDAO(DAOType daoType) {
-    	DeviceDAO dao = null;
+    public static LocationDAO getLocationDAO(DAOType daoType) {
+    	LocationDAO dao = null;
         switch (daoType) {
             case DynamoDB:
-                dao = DDBDeviceDAO.getInstance();
+                dao = DDBLocationDAO.getInstance();
                 break;
         }
 
         return dao;
     }
-
+    
 }

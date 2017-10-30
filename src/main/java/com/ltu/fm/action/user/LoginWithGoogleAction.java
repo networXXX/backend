@@ -1,3 +1,15 @@
+/*
+ * Copyright 2017 ltu.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance
+ * with the License. A copy of the License is located at
+ *
+ * http://ltu.com/apache2.0/
+ *
+ * or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
+ * and limitations under the License.
+ */
 package com.ltu.fm.action.user;
 
 import java.nio.ByteBuffer;
@@ -19,8 +31,6 @@ import com.ltu.fm.exception.InternalErrorException;
 import com.ltu.fm.helper.PasswordHelper;
 import com.ltu.fm.model.action.user.LoginUserResponse;
 import com.ltu.fm.model.action.user.LoginWithTokenRequest;
-import com.ltu.fm.model.device.Device;
-import com.ltu.fm.model.device.DeviceDAO;
 import com.ltu.fm.model.user.User;
 import com.ltu.fm.model.user.UserDAO;
 import com.ltu.fm.service.GoogleService;
@@ -33,7 +43,8 @@ import com.ltu.fm.service.GoogleService;
 public class LoginWithGoogleAction extends AbstractLambdaAction{
 	private LambdaLogger logger;
 
-    public String handle(JsonObject request, Context lambdaContext) throws BadRequestException, InternalErrorException {
+    @Override
+	public String handle(JsonObject request, Context lambdaContext) throws BadRequestException, InternalErrorException {
     	logger = lambdaContext.getLogger();
 
         LoginWithTokenRequest input = getGson().fromJson(request, LoginWithTokenRequest.class);
@@ -69,10 +80,6 @@ public class LoginWithGoogleAction extends AbstractLambdaAction{
 			fbUser = registerValidUser(fbUser);
 		}
 		
-		//Update device
-  		if (input.getPhoneId() != null && !input.getPhoneId().trim().equals("")) {
-  			updateDevice(input.getPhoneId(), fbUser.getId());
-  		}
 		return fbUser;
 	}
 
@@ -100,22 +107,6 @@ public class LoginWithGoogleAction extends AbstractLambdaAction{
 		}
 		return fbUser;
 	}
-    
-    private void updateDevice(String deviceId, String userId) throws InternalErrorException{
-    	if (deviceId != null) {
-    		try {
-    			DeviceDAO deviceDAO = DAOFactory.getDeviceDAO();
-				Device device = deviceDAO.findByPhoneId(deviceId);
-				if (device != null) {
-					device.setLastLoginUserId(userId);
-					deviceDAO.update(device);
-				}
-			} catch (DAOException e) {
-				logger.log("Erro updating device.\n" + e.getMessage());
-	            throw new InternalErrorException(ExceptionMessages.EX_UPDATE_DEVICE);
-			}
-		}
-    }
     
     private User getGoogleInfo(String token) throws BadRequestException {
     	return GoogleService.getInstance().authenticate(token);

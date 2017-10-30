@@ -1,3 +1,15 @@
+/*
+ * Copyright 2017 ltu.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance
+ * with the License. A copy of the License is located at
+ *
+ * http://ltu.com/apache2.0/
+ *
+ * or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
+ * and limitations under the License.
+ */
 package com.ltu.fm.dao;
 
 import java.util.ArrayList;
@@ -40,8 +52,6 @@ public class InitDao {
 		try {
 
 			deleteTable(DynamoDBConfiguration.USERS_TABLE_NAME);
-			deleteTable(DynamoDBConfiguration.DEVICE_TABLE_NAME);
-			deleteTable(DynamoDBConfiguration.PET_TABLE_NAME);
 			deleteTable(DynamoDBConfiguration.USER_POINT_TABLE_NAME);
 			
 //			// //
@@ -52,8 +62,6 @@ public class InitDao {
 //			// // // Parameter6/7: sort key and data type (if applicable)
 //
 			createTable(DynamoDBConfiguration.USERS_TABLE_NAME, 10L, 2L, "id", "S", null, null);
-			createTable(DynamoDBConfiguration.DEVICE_TABLE_NAME, 10L, 2L, "id", "S", null, null);
-			createTable(DynamoDBConfiguration.PET_TABLE_NAME, 10L, 2L, "id", "S", null, null);
 			createGeoTable(DynamoDBConfiguration.USER_POINT_TABLE_NAME, 10L, 10L);
 
 		} catch (Exception e) {
