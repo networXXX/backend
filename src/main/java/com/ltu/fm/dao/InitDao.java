@@ -53,6 +53,7 @@ public class InitDao {
 
 			deleteTable(DynamoDBConfiguration.USERS_TABLE_NAME);
 			deleteTable(DynamoDBConfiguration.USER_POINT_TABLE_NAME);
+			deleteTable(DynamoDBConfiguration.LOCATION_TABLE_NAME);
 			
 //			// //
 //			// // // Parameter1: table name // Parameter2: reads per second //
@@ -62,6 +63,7 @@ public class InitDao {
 //			// // // Parameter6/7: sort key and data type (if applicable)
 //
 			createTable(DynamoDBConfiguration.USERS_TABLE_NAME, 10L, 2L, "id", "S", null, null);
+			createTable(DynamoDBConfiguration.LOCATION_TABLE_NAME, 10L, 2L, "id", "S", null, null);
 			createGeoTable(DynamoDBConfiguration.USER_POINT_TABLE_NAME, 10L, 10L);
 
 		} catch (Exception e) {

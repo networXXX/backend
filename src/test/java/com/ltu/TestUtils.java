@@ -1,3 +1,15 @@
+/*
+ * Copyright 2017 ltu.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance
+ * with the License. A copy of the License is located at
+ *
+ * http://ltu.com/apache2.0/
+ *
+ * or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
+ * and limitations under the License.
+ */
 package com.ltu;
 
 import java.io.FileNotFoundException;
@@ -14,6 +26,7 @@ import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 import org.joda.time.tz.FixedDateTimeZone;
 
+import com.amazonaws.services.cognitoidentity.model.InternalErrorException;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.events.S3Event;
 import com.amazonaws.services.s3.event.S3EventNotification;
@@ -29,7 +42,6 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.ltu.fm.RequestRouter;
 import com.ltu.fm.exception.BadRequestException;
-import com.ltu.fm.exception.InternalErrorException;
 
 /**
  * Helper utilities for testing Lambda functions.
@@ -57,25 +69,30 @@ public class TestUtils {
     public static void callAPI(Context context, String input, String output) {
     	//FIXME comment dev bucket, config
     	
-//    	DateFormat iso8601Format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-//		System.out.println(iso8601Format.format(Calendar.getInstance().getTime()));
-//		long start = Calendar.getInstance().getTime().getTime();
-//		try {
-//			InputStream request = TestUtils.class.getResourceAsStream(input);
-//			OutputStream response = new FileOutputStream(output);
-//			RequestRouter.lambdaHandler(request, response, context);
-//			
-//		} catch (BadRequestException e) {
-//			e.printStackTrace();
-//		} catch (InternalErrorException e) {
-//			e.printStackTrace();
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//		System.out.println(iso8601Format.format(Calendar.getInstance().getTime()));
-//		long end = Calendar.getInstance().getTime().getTime();
-//		double result = ((end - start)/1000.0)/60.0;
-//		System.out.println("Duration:" + String.valueOf(result));
+    	DateFormat iso8601Format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+		System.out.println(iso8601Format.format(Calendar.getInstance().getTime()));
+		long start = Calendar.getInstance().getTime().getTime();
+		try {
+			InputStream request = TestUtils.class.getResourceAsStream(input);
+			OutputStream response = new FileOutputStream(output);
+			RequestRouter.lambdaHandler(request, response, context);
+			
+			response.flush();
+			response.close();
+			request.close();
+		} catch (BadRequestException e) {
+			e.printStackTrace();
+		} catch (InternalErrorException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println(iso8601Format.format(Calendar.getInstance().getTime()));
+		long end = Calendar.getInstance().getTime().getTime();
+		double result = ((end - start)/1000.0)/60.0;
+		System.out.println("Duration:" + String.valueOf(result));
 
 	}
     

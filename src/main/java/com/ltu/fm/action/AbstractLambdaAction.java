@@ -20,7 +20,7 @@ import com.google.gson.GsonBuilder;
  * Abstract class implementing the DemoAction interface. This class is used to declare utility method
  * shared with all Action implementations
  */
-public abstract class AbstractLambdaAction implements LambdaAction {
+public abstract class AbstractLambdaAction implements NetworkAction {
     /**
      * Returns an initialized Gson object with the default configuration
      * @return An initialized Gson object

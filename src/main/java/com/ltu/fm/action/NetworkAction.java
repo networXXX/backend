@@ -24,7 +24,7 @@ import com.ltu.fm.exception.InternalErrorException;
  * classes should be able to receive a JsonObject containing the body of the request (taken from the "body" property)
  * of the incoming JSON, and return a String that contains valid json.
  */
-public interface LambdaAction {
+public interface NetworkAction {
     /**
      * The main handler method for each requests. This method is called by the RequestRouter when invoked by a Lambda
      * function.
