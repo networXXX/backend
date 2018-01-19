@@ -31,8 +31,8 @@ import com.ltu.fm.model.user.UserIdentity;
 public class CognitoCredentialsProvider implements CredentialsProvider {
     private static CognitoCredentialsProvider instance = null;
 
-    private static AmazonCognitoIdentityClient identityClient = new AmazonCognitoIdentityClient(CredentialConfiguration.getAwsCredentials());
-    //private static AmazonCognitoIdentityClient identityClient = new AmazonCognitoIdentityClient();
+    //private static AmazonCognitoIdentityClient identityClient = new AmazonCognitoIdentityClient(CredentialConfiguration.getAwsCredentials());    
+    private static AmazonCognitoIdentityClient identityClient = new AmazonCognitoIdentityClient();
 
     /**
      * Gets the initialized instance of the CognitoCredentialsProvider. This provider should be accessed through the

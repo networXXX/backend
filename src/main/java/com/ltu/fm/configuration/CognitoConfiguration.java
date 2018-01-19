@@ -20,8 +20,7 @@ package com.ltu.fm.configuration;
 public class CognitoConfiguration {
 	// TODO: Specify the identity pool id
 	/** The Constant IDENTITY_POOL_ID. */
-	//public static final String IDENTITY_POOL_ID = "us-east-1:d9a0e97c-27a0-4e92-87c9-7c5de4d9e778";
-	public static final String IDENTITY_POOL_ID = "us-east-1:d7ab2c78-2b95-4623-8102-05e8328eb07e";
+	public static final String IDENTITY_POOL_ID = "us-east-1:d0175c2b-ca2a-439b-b50a-6752538105e9";
 	// TODO: Specify the custom provider name used by the identity pool
     /** The Constant CUSTOM_PROVIDER_NAME. */
 	public static final String CUSTOM_PROVIDER_NAME = "com.ltu.fm";

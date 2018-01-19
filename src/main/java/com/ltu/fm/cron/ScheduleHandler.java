@@ -1,4 +1,4 @@
-package com.ltu.vs.cron;
+package com.ltu.fm.cron;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
