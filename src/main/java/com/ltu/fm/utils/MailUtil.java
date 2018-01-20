@@ -1,4 +1,29 @@
+/*
+ * Copyright 2017 ltu.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance
+ * with the License. A copy of the License is located at
+ *
+ * http://ltu.com/apache2.0/
+ *
+ * or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
+ * and limitations under the License.
+ */
 package com.ltu.fm.utils;
+
+/*
+ * Copyright 2017 ltu.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance
+ * with the License. A copy of the License is located at
+ *
+ * http://ltu.com/apache2.0/
+ *
+ * or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
+ * and limitations under the License.
+ */
 
 import java.util.Properties;
 
@@ -7,7 +32,8 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.ltu.fm.configuration.AppConfiguration;
 import com.ltu.fm.constants.Constants;
@@ -17,14 +43,15 @@ import com.ltu.fm.exception.ErrorCodeDetail;
 /**
  * The Class MailUtil.
  * @author uyphu
+ * created on May 21, 2017
  */
 public class MailUtil {
 	
-	/** The log. */
-	private static Logger log = Logger.getLogger(MailUtil.class);
+	/** The logger. */
+	private static final Logger logger = LogManager.getLogger("MailUtil");
 	
 	/** The Constant FROM. */
-	static final String FROM = S3ResourceLoaderUtil.getProperty(AppConfiguration.FROM_MAIL);  // Replace with your "From" address. This address must be verified.
+	//static final String FROM = S3ResourceLoaderUtil.getProperty(AppConfiguration.FROM_MAIL);  // Replace with your "From" address. This address must be verified.
                                                       
                                                       /** The Constant SUBJECT. */
                                                       // sandbox, this address must be verified.
@@ -38,13 +65,25 @@ public class MailUtil {
     //static final String HOST = "email-smtp.us-east-1.amazonaws.com";//"email-smtp.us-west-2.amazonaws.com";    
     
     /** The Constant SMTP_USERNAME. */
-    static final String SMTP_USERNAME = S3ResourceLoaderUtil.getProperty(AppConfiguration.SMTP_USERNAME);
+    //static final String SMTP_USERNAME = S3ResourceLoaderUtil.getProperty(AppConfiguration.SMTP_USERNAME);
     
     /** The Constant SMTP_PASSWORD. */
-    static final String SMTP_PASSWORD = S3ResourceLoaderUtil.getProperty(AppConfiguration.SMTP_PASSWORD);
+    //static final String SMTP_PASSWORD = S3ResourceLoaderUtil.getProperty(AppConfiguration.SMTP_PASSWORD);
     
     /** The Constant HOST. */
-    static final String HOST = S3ResourceLoaderUtil.getProperty(AppConfiguration.HOST_MAIL);   
+    //static final String HOST = S3ResourceLoaderUtil.getProperty(AppConfiguration.HOST_MAIL);  
+    
+    
+    private static MailUtil instance;
+    
+    private MailUtil(){}
+    
+    public static MailUtil getInstance(){
+        if(instance == null){
+            instance = new MailUtil();
+        }
+        return instance;
+    }
     
     // Port we will connect to on the Amazon SES SMTP endpoint. We are choosing port 25 because we will use
     /** The Constant PORT. */
@@ -59,7 +98,7 @@ public class MailUtil {
 	 * @return true, if successful
 	 * @throws CommonException the common exception
 	 */
-	public static boolean sendActivateEmail(String to, String activateKey) throws CommonException{
+	public static boolean sendActivateEmail(String to, String activateKey) throws CommonException {
 
 		try {
 			// Create a Properties object to contain connection configuration
@@ -84,7 +123,8 @@ public class MailUtil {
 
 			// Create a message with the specified information.
 			MimeMessage msg = new MimeMessage(session);
-			msg.setFrom(new InternetAddress(FROM));
+			//msg.setFrom(new InternetAddress(FROM));
+			msg.setFrom(new InternetAddress(S3ResourceLoaderUtil.getProperty(AppConfiguration.FROM_MAIL)));
 			msg.setRecipient(javax.mail.Message.RecipientType.TO,
 					new InternetAddress(to));
 			msg.setSubject(SUBJECT);
@@ -100,7 +140,10 @@ public class MailUtil {
 
 				// Connect to Amazon SES using the SMTP username and password
 				// you specified above.
-				transport.connect(HOST, SMTP_USERNAME, SMTP_PASSWORD);
+				//transport.connect(HOST, SMTP_USERNAME, SMTP_PASSWORD);
+				transport.connect(S3ResourceLoaderUtil.getProperty(AppConfiguration.HOST_MAIL), 
+						S3ResourceLoaderUtil.getProperty(AppConfiguration.SMTP_USERNAME), 
+						S3ResourceLoaderUtil.getProperty(AppConfiguration.SMTP_PASSWORD));
 
 				// Send the email.
 				transport.sendMessage(msg, msg.getAllRecipients());
@@ -108,7 +151,7 @@ public class MailUtil {
 			} catch (Exception ex) {
 				//System.out.println("The email was not sent.");
 				//System.out.println("Error message: " + ex.getMessage());
-				log.error("The email was not sent." + ex.getMessage());
+				logger.error("The email was not sent." + ex.getMessage());
 				throw new CommonException(ErrorCodeDetail.ERROR_SEND_EMAIL.getMsg(), ex);
 			} finally {
 				// Close and terminate the connection.
@@ -116,7 +159,7 @@ public class MailUtil {
 			}
 		} catch (Exception e) {
 			//e.printStackTrace();
-			log.error(e.getMessage());
+			logger.error(e.getMessage());
 			throw new CommonException(ErrorCodeDetail.ERROR_SEND_EMAIL.getMsg(), e);
 		}
 		return true;
@@ -156,7 +199,7 @@ public class MailUtil {
 
 			// Create a message with the specified information.
 			MimeMessage msg = new MimeMessage(session);
-			msg.setFrom(new InternetAddress(FROM));
+			msg.setFrom(new InternetAddress(S3ResourceLoaderUtil.getProperty(AppConfiguration.FROM_MAIL)));
 			msg.setRecipient(javax.mail.Message.RecipientType.TO,
 					new InternetAddress(to));
 			msg.setSubject(subject);
@@ -171,7 +214,10 @@ public class MailUtil {
 
 				// Connect to Amazon SES using the SMTP username and password
 				// you specified above.
-				transport.connect(HOST, SMTP_USERNAME, SMTP_PASSWORD);
+				//transport.connect(HOST, SMTP_USERNAME, SMTP_PASSWORD);
+				transport.connect(S3ResourceLoaderUtil.getProperty(AppConfiguration.HOST_MAIL), 
+						S3ResourceLoaderUtil.getProperty(AppConfiguration.SMTP_USERNAME), 
+						S3ResourceLoaderUtil.getProperty(AppConfiguration.SMTP_PASSWORD));
 
 				// Send the email.
 				transport.sendMessage(msg, msg.getAllRecipients());
@@ -179,7 +225,7 @@ public class MailUtil {
 			} catch (Exception ex) {
 				//System.out.println("The email was not sent.");
 				//System.out.println("Error message: " + ex.getMessage());
-				log.error("The email was not sent." + ex.getMessage());
+				logger.error("The email was not sent." + ex.getMessage());
 				throw new CommonException(ErrorCodeDetail.ERROR_SEND_EMAIL.getMsg(), ex);
 			} finally {
 				// Close and terminate the connection.
@@ -187,7 +233,7 @@ public class MailUtil {
 			}
 		} catch (Exception e) {
 			//e.printStackTrace();
-			log.error(e.getMessage());
+			logger.error(e.getMessage());
 			throw new CommonException(ErrorCodeDetail.ERROR_SEND_EMAIL.getMsg(), e);
 		}
 		return true;
@@ -225,3 +271,4 @@ public class MailUtil {
 	}
 	
 }
+

@@ -1,5 +1,5 @@
 {
-	"action":"com.ltu.fm.action.user.Register1Action",
+	"action":"com.ltu.fm.action.user.RegisterAction",
 	"body":{
 	    "email":"uyphu@yahoo.com",
 	    "displayName":"Phu Le",

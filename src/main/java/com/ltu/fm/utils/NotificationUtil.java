@@ -1,10 +1,23 @@
+/*
+ * Copyright 2017 ltu.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance
+ * with the License. A copy of the License is located at
+ *
+ * http://ltu.com/apache2.0/
+ *
+ * or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
+ * and limitations under the License.
+ */
 package com.ltu.fm.utils;
 
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.ltu.fm.configuration.ExceptionMessages;
 import com.ltu.fm.constants.Constants;
@@ -16,7 +29,7 @@ import com.ltu.fm.exception.InternalErrorException;
 public class NotificationUtil {
 
 	/** The log. */
-	private static Logger LOG = Logger.getLogger(NotificationUtil.class);
+	private static Logger LOG = LogManager.getLogger(NotificationUtil.class);
 
 	/** The android api key. */
 	private static String ANDROID_API_KEY = "key=AIzaSyDPahGQaJMgQpeRjUuGYAX2vbi0lwgq4kE";

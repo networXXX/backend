@@ -26,7 +26,9 @@ public class AppConfiguration {
 	//DEV
 	//public static final String BUCKET_NAME = "config-no-deleting";
 	//PROD
-	public static final String BUCKET_NAME = "network-us-east-1";
+	public static final String BUCKET_NAME = "secret-us-east-1";
+	
+	public static final String S3_BUCKET = "S3_BUCKET";
 	
 	/** The web url key. */
 	public static String WEB_URL_KEY = "webUrl";
