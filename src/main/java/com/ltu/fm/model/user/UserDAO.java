@@ -22,7 +22,7 @@ import com.ltu.fm.exception.DAOException;
  */
 public interface UserDAO {
     
-    /**
+	/**
      * Find a user by its unique username.
      *
      * @param email the email
@@ -118,7 +118,7 @@ public interface UserDAO {
      * @param cursor the cursor
      * @return the list
      */
-    List<User> search(String query, int limit, String cursor);
+    List<User> search(String query, int limit, String cursor, String indexStr);
     
     /**
      * Mapper scan.
@@ -128,7 +128,7 @@ public interface UserDAO {
      * @param cursor the cursor
      * @return the list
      */
-    public List<User> mapperScan(String query, int limit, String cursor);
+    public List<User> mapperScan(String query, int limit, String cursor, String indexStr);
     
     /**
      * Scan.
@@ -138,6 +138,6 @@ public interface UserDAO {
      * @param cursor the cursor
      * @return the list
      */
-    public List<User> scan(String query, int limit, String cursor);
-    
+    public List<User> scan(String query, int limit, String cursor, String indexStr);
 }
+

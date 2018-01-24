@@ -43,16 +43,9 @@ import com.ltu.fm.utils.ConvertUtil;
  * The table in DynamoDB should be created with an Hash Key called username.
  */
 public class DDBUserDAO extends AbstractDao<User> implements UserDAO {
+	
 	private static DDBUserDAO instance = null;
-
-	// credentials for the client come from the environment variables
-	// pre-configured by Lambda. These are tied to the
-	// Lambda function execution role.
-	// private static AmazonDynamoDBClient ddbClient = new
-	// AmazonDynamoDBClient();//AmazonDynamoDBClientUtil.getInstance();
-	// static AmazonDynamoDBClient client =
-	// AmazonDynamoDBClientUtil.getInstance();
-
+    
 	/**
 	 * Returns an initialized instance of the DDBUserDAO object. DAO objects
 	 * should be retrieved through the DAOFactory class
@@ -79,6 +72,7 @@ public class DDBUserDAO extends AbstractDao<User> implements UserDAO {
 	 * @return A populated User object, null if the user was not found
 	 * @throws DAOException
 	 */
+	@Override
 	public User getUserByEmail(String email) throws DAOException {
 		if (email == null || email.trim().equals("")) {
 			throw new DAOException("Cannot lookup null or empty user");
@@ -95,6 +89,7 @@ public class DDBUserDAO extends AbstractDao<User> implements UserDAO {
 	 * @return The username that was just inserted in DynamoDB
 	 * @throws DAOException
 	 */
+	@Override
 	public String createUser(User user) throws DAOException {
 		if (user.getEmail() == null || user.getEmail().trim().equals("")) {
 			throw new DAOException("Cannot create user with empty username");
@@ -146,15 +141,16 @@ public class DDBUserDAO extends AbstractDao<User> implements UserDAO {
 	}
 
 	@Override
-	public List<User> search(String query, int limit, String cursor) {
+	public List<User> search(String query, int limit, String cursor, String indexStr) {
 		if (query == null) {
-			return mapperScan(query, limit, cursor);
+			return mapperScan(query, limit, cursor, indexStr);
 		}
-		return scan(query, limit, cursor);
+		return scan(query, limit, cursor, indexStr);
 	}
 
+	@Override
 	public User findByEmail(String email) {
-		List<User> list = search("email:" + email, 1, null);
+		List<User> list = search("email:" + email, 1, null, DynamoDBConfiguration.USER_EMAIL_INDEX);
 		if (list != null && !list.isEmpty()) {
 			return list.get(0);
 		}
@@ -163,7 +159,7 @@ public class DDBUserDAO extends AbstractDao<User> implements UserDAO {
 
 	@Override
 	public User findByActivateCode(String activateCode) throws DAOException {
-		List<User> list = search("activateCode:" + activateCode, 1, null);
+		List<User> list = search("activateCode:" + activateCode, 1, null, null);
 		if (list != null && !list.isEmpty()) {
 			return list.get(0);
 		}
@@ -172,7 +168,7 @@ public class DDBUserDAO extends AbstractDao<User> implements UserDAO {
 
 	@Override
 	public User activateUser(String activateCode) throws DAOException {
-		List<User> list = search("activateCode:" + activateCode, 1, null);
+		List<User> list = search("activateCode:" + activateCode, 1, null, null);
 		if (list != null && !list.isEmpty()) {
 			User user = list.get(0);
 			user.setActivateCode(null);
@@ -182,17 +178,41 @@ public class DDBUserDAO extends AbstractDao<User> implements UserDAO {
 		return null;
 	}
 
-	private Map<String, AttributeValue> buildExclusiveStartKey(String cursor) {
+//	private Map<String, AttributeValue> buildExclusiveStartKey(String cursor) {
+//		if (cursor == null || cursor.trim().equals(Constants.EMPTY_STRING)) {
+//			return null;
+//		}
+//		Map<String, AttributeValue> exclusiveStartKey = new HashMap<String, AttributeValue>();
+//		exclusiveStartKey.put("id", new AttributeValue(cursor));
+//		return exclusiveStartKey;
+//	}
+	
+	private Map<String, AttributeValue> buildExclusiveStartKey(String cursor, String indexStr) {
 		if (cursor == null || cursor.trim().equals(Constants.EMPTY_STRING)) {
 			return null;
+		}
+		if (DynamoDBConfiguration.USER_EMAIL_INDEX.equals(indexStr)) {
+			return buildEmailIndex(cursor);
 		}
 		Map<String, AttributeValue> exclusiveStartKey = new HashMap<String, AttributeValue>();
 		exclusiveStartKey.put("id", new AttributeValue(cursor));
 		return exclusiveStartKey;
 	}
+	
+	private Map<String, AttributeValue> buildEmailIndex(String cursor) {
+		Map<String, AttributeValue> exclusiveStartKey = new HashMap<String, AttributeValue>();
+		User user = find(cursor);
+		exclusiveStartKey.put("id", new AttributeValue(cursor));
+		exclusiveStartKey.put("email", new AttributeValue(user.getEmail()));
+		return exclusiveStartKey;
+	}
 
-	private ScanRequest buildScan(String query, int limit) {
+	private ScanRequest buildScan(String query, int limit, String indexStr) {
 		ScanRequest scanRequest = new ScanRequest(DynamoDBConfiguration.USERS_TABLE_NAME);
+		
+		if (indexStr != null) {
+			scanRequest.setIndexName(indexStr);
+		}
 
 		if (query != null) {
 			HashMap<String, Condition> scanFilter = new HashMap<String, Condition>();
@@ -283,9 +303,9 @@ public class DDBUserDAO extends AbstractDao<User> implements UserDAO {
 	}
 
 	@Override
-	public List<User> scan(String query, int limit, String cursor) {
-		ScanRequest scanRequest = buildScan(query, limit);
-		Map<String, AttributeValue> exclusiveStartKey = buildExclusiveStartKey(cursor);
+	public List<User> scan(String query, int limit, String cursor, String indexStr) {
+		ScanRequest scanRequest = buildScan(query, limit, indexStr);
+		Map<String, AttributeValue> exclusiveStartKey = buildExclusiveStartKey(cursor, indexStr);
 		List<User> users = new ArrayList<User>();
 
 		do {
@@ -309,9 +329,9 @@ public class DDBUserDAO extends AbstractDao<User> implements UserDAO {
 	}
 
 	@Override
-	public List<User> mapperScan(String query, int limit, String cursor) {
+	public List<User> mapperScan(String query, int limit, String cursor, String indexStr) {
 		DynamoDBScanExpression scanExpression = buildScanMapper(query, limit);
-		Map<String, AttributeValue> exclusiveStartKey = buildExclusiveStartKey(cursor);
+		Map<String, AttributeValue> exclusiveStartKey = buildExclusiveStartKey(cursor, indexStr);
 		if (exclusiveStartKey != null) {
 			scanExpression.setExclusiveStartKey(exclusiveStartKey);
 		}
@@ -327,5 +347,4 @@ public class DDBUserDAO extends AbstractDao<User> implements UserDAO {
 	protected DynamoDBMapper getMapper() {
 		return new DynamoDBMapper(client);
 	}
-
 }
