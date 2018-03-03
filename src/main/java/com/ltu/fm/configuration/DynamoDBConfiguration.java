@@ -30,6 +30,9 @@ public class DynamoDBConfiguration {
     /** The Constant USER_POINT_TABLE_NAME. */
     public static final String USER_POINT_TABLE_NAME = "nx_user_point";
     
+    /** The Constant FRIENDS_TABLE_NAME. */
+    public static final String FRIENDS_TABLE_NAME = "nx_friends";
+    
     /** The Constant SCAN_LIMIT. */
     public static final int SCAN_LIMIT = 50;
     
@@ -52,6 +55,9 @@ public class DynamoDBConfiguration {
     
     /** The Constant USER_EMAIL_INDEX. */
     public static final String USER_EMAIL_INDEX = "email-index";
+    
+    /** The Constant USER_ID_EMAIL_INDEX. */
+    public static final String USER_ID_INDEX = "userId-index";
     
 }
 

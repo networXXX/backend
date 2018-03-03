@@ -19,7 +19,6 @@ public class LoginWithTokenRequest {
 	private String email;
     private String token;
     private String displayName;
-    private String phoneId;
     
 	public String getEmail() {
 		return email;
@@ -38,14 +37,6 @@ public class LoginWithTokenRequest {
 	}
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
-	}
-	public String getPhoneId() {
-		return phoneId;
-	}
-	public void setPhoneId(String phoneId) {
-		this.phoneId = phoneId;
-	}
-	
-	
+	}	
 	
 }

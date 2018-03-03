@@ -18,6 +18,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.ltu.fm.model.friend.Friend;
 import com.ltu.fm.model.user.User;
 
 /**
@@ -48,6 +49,19 @@ public class ConvertUtil {
 			log.error(e.getMessage(), e.getCause());
 		}
 		return user;
+	}
+	
+	public static Friend toFriend(Map<String, AttributeValue> item) {
+		Friend friend = new Friend();
+		try {
+			friend.setId(item.get("id").getS());
+			friend.setUserId(item.get("userId") != null ? item.get("userId").getS() : null);
+			friend.setOtherId(item.get("otherId") != null ? item.get("otherId").getS() : null);
+			friend.setCreatedAt(item.get("createdAt") != null ? AppUtil.toDate(item.get("createdAt").getS()) : null);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e.getCause());
+		}
+		return friend;
 	}
 	
 }
