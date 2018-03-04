@@ -12,6 +12,8 @@
  */
 package com.ltu.fm.dao.factory;
 
+import com.ltu.fm.model.friend.DDBFriendDAO;
+import com.ltu.fm.model.friend.FriendDAO;
 import com.ltu.fm.model.geo.DDBUserPointDAO;
 import com.ltu.fm.model.geo.UserPointDAO;
 import com.ltu.fm.model.location.DDBLocationDAO;
@@ -108,6 +110,32 @@ public class DAOFactory {
         switch (daoType) {
             case DynamoDB:
                 dao = DDBLocationDAO.getInstance();
+                break;
+        }
+
+        return dao;
+    }
+        
+    /**
+     * Gets the friend DAO.
+     *
+     * @return the friend DAO
+     */
+    public static FriendDAO getFriendDAO() {
+        return getFriendDAO(DAOType.DynamoDB);
+    }
+
+    /**
+     * Gets the friend DAO.
+     *
+     * @param daoType the dao type
+     * @return the friend DAO
+     */
+    public static FriendDAO getFriendDAO(DAOType daoType) {
+    	FriendDAO dao = null;
+        switch (daoType) {
+            case DynamoDB:
+                dao = DDBFriendDAO.getInstance();
                 break;
         }
 

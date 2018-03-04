@@ -33,6 +33,10 @@ public class Friend{
 	@Expose
 	private String otherId;
 	
+	@DynamoDBAttribute(attributeName = "status")
+	@Expose
+	private String status;
+	
 	/** The created at. */
 	@DynamoDBAttribute(attributeName = "createdAt")
 	@Expose
@@ -97,6 +101,24 @@ public class Friend{
 	 */
 	public void setOtherId(String otherId) {
 		this.otherId = otherId;
+	}
+	
+	/**
+	 * Gets the status.
+	 *
+	 * @return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
+
+	/**
+	 * Sets the status.
+	 *
+	 * @param status the new status
+	 */
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	/**
