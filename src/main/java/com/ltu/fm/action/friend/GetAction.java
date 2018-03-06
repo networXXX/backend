@@ -19,10 +19,10 @@ import com.ltu.fm.configuration.ExceptionMessages;
 import com.ltu.fm.dao.factory.DAOFactory;
 import com.ltu.fm.exception.BadRequestException;
 import com.ltu.fm.exception.InternalErrorException;
-import com.ltu.fm.model.action.location.GetLocationRequest;
-import com.ltu.fm.model.action.location.LocationResponse;
-import com.ltu.fm.model.location.Location;
-import com.ltu.fm.model.location.LocationDAO;
+import com.ltu.fm.model.action.friend.FriendResponse;
+import com.ltu.fm.model.action.friend.GetFriendRequest;
+import com.ltu.fm.model.friend.Friend;
+import com.ltu.fm.model.friend.FriendDAO;
 
 public class GetAction extends AbstractLambdaAction {
 	//private LambdaLogger logger;
@@ -31,7 +31,7 @@ public class GetAction extends AbstractLambdaAction {
 	public String handle(JsonObject request, Context lambdaContext) throws BadRequestException, InternalErrorException {
         //logger = lambdaContext.getLogger();
 
-        GetLocationRequest input = getGson().fromJson(request, GetLocationRequest.class);
+        GetFriendRequest input = getGson().fromJson(request, GetFriendRequest.class);
 
         if (input == null ||
                 input.getId() == null ||
@@ -39,16 +39,16 @@ public class GetAction extends AbstractLambdaAction {
             throw new BadRequestException(ExceptionMessages.EX_INVALID_INPUT);
         }
 
-        LocationDAO dao = DAOFactory.getLocationDAO();
+        FriendDAO dao = DAOFactory.getFriendDAO();
 
-        Location getLocation = dao.find(input.getId());
+        Friend getFriend = dao.find(input.getId());
 
-        if (getLocation == null) {
-            throw new InternalErrorException(ExceptionMessages.EX_USER_NOT_FOUND);
+        if (getFriend == null) {
+            throw new InternalErrorException(ExceptionMessages.EX_FRIEND_NOT_FOUND);
 		}
 
-        LocationResponse output = new LocationResponse();
-        output.setItem(getLocation);
+        FriendResponse output = new FriendResponse();
+        output.setItem(getFriend);
 
         return getGson().toJson(output);
     }

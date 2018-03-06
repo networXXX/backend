@@ -1,6 +1,0 @@
-{
-	"action":"com.ltu.fm.action.device.SearchAction",
-	"body":{
-		 "query": "phoneId:aeccd939ee30b76d"
-	}
-}

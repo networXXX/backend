@@ -34,6 +34,7 @@ public class ExceptionMessages {
     public static final String EX_SEND_NOTIFICATION = "Error sending notification";
     public static final String EX_SEND_INVITATION = "Error sending invitation email";
     public static final String EX_USER_NOT_FOUND = "User not found";
+    public static final String EX_FRIEND_NOT_FOUND = "Friend not found";
     public static final String EX_UPDATE_DEVICE = "Error update device";
     public static final String EX_EMAIL_EXIST = "Email exists.";
     public static final String EX_UPDATE_CONFERENCE = "Error update conference";
@@ -70,6 +71,7 @@ public class ExceptionMessages {
     //Insert Contact
     public static final String EX_PARAM_OWNER_ID_REQUIRED = "OwnerId required";
     public static final String EX_PARAM_USER_ID_REQUIRED = "UserId required";
+    public static final String EX_PARAM_OTHER_ID_REQUIRED = "OtherId required";
     public static final String EX_PARAM_RECEIVER_ID_REQUIRED = "ReceiverId required";
     public static final String EX_PARAM_SENDER_ID_REQUIRED = "ReceiverId required";
     public static final String EX_CONTACT_NOT_FOUND = "Contact not found";

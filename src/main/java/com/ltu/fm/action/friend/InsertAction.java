@@ -21,13 +21,14 @@ import com.ltu.fm.dao.factory.DAOFactory;
 import com.ltu.fm.exception.BadRequestException;
 import com.ltu.fm.exception.DAOException;
 import com.ltu.fm.exception.InternalErrorException;
-import com.ltu.fm.model.action.location.InsertLocationRequest;
-import com.ltu.fm.model.action.location.LocationResponse;
-import com.ltu.fm.model.location.Location;
-import com.ltu.fm.model.location.LocationDAO;
+import com.ltu.fm.model.action.friend.FriendResponse;
+import com.ltu.fm.model.action.friend.InsertFriendRequest;
+import com.ltu.fm.model.friend.Friend;
+import com.ltu.fm.model.friend.FriendDAO;
+
 
 /**
- * Action that creates a new Location
+ * Action that creates a new Friend
  * <p/>
  * POST to /pets/
  */
@@ -38,7 +39,7 @@ public class InsertAction extends AbstractLambdaAction{
 	public String handle(JsonObject request, Context lambdaContext) throws BadRequestException, InternalErrorException {
         logger = lambdaContext.getLogger();
 
-        InsertLocationRequest input = getGson().fromJson(request, InsertLocationRequest.class);
+        InsertFriendRequest input = getGson().fromJson(request, InsertFriendRequest.class);
 
         if (input == null ||
                 input.getUserId() == null ||
@@ -46,24 +47,33 @@ public class InsertAction extends AbstractLambdaAction{
             throw new BadRequestException(ExceptionMessages.EX_INVALID_INPUT);
         }
         
-        LocationDAO dao = DAOFactory.getLocationDAO();
+        if (input == null ||
+                input.getOtherId() == null ||
+                input.getOtherId().trim().equals("")) {
+            throw new BadRequestException(ExceptionMessages.EX_INVALID_INPUT);
+        }
+        
+        FriendDAO dao = DAOFactory.getFriendDAO();
 
-        Location newLocation = new Location();
+        Friend newFriend = new Friend();
         
         try {
-        	newLocation = dao.insert(newLocation);
+        	newFriend.setUserId(input.getUserId());
+        	newFriend.setOtherId(input.getOtherId());
+        	newFriend.setStatus(input.getStatus());
+        	newFriend = dao.insert(newFriend);
         } catch (final DAOException e) {
-            logger.log("Error while creating new location\n" + e.getMessage());
+            logger.log("Error while creating new friend\n" + e.getMessage());
             throw new InternalErrorException(ExceptionMessages.EX_DAO_ERROR);
         }
 
-        if (newLocation.getId() == null || newLocation.getId().trim().equals("")) {
-            logger.log("LocationID is null or empty");
+        if (newFriend.getId() == null || newFriend.getId().trim().equals("")) {
+            logger.log("FriendID is null or empty");
             throw new InternalErrorException(ExceptionMessages.EX_DAO_ERROR);
         }
 
-        LocationResponse output = new LocationResponse();
-        output.setItem(newLocation);
+        FriendResponse output = new FriendResponse();
+        output.setItem(newFriend);
 
         return getGson().toJson(output);
     }

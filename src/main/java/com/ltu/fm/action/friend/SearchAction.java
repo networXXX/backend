@@ -22,10 +22,11 @@ import com.ltu.fm.configuration.ExceptionMessages;
 import com.ltu.fm.dao.factory.DAOFactory;
 import com.ltu.fm.exception.BadRequestException;
 import com.ltu.fm.exception.InternalErrorException;
-import com.ltu.fm.model.action.user.SearchUserRequest;
-import com.ltu.fm.model.action.user.SearchUserResponse;
-import com.ltu.fm.model.user.User;
-import com.ltu.fm.model.user.UserDAO;
+import com.ltu.fm.model.action.friend.SearchFriendRequest;
+import com.ltu.fm.model.action.friend.SearchFriendResponse;
+import com.ltu.fm.model.friend.Friend;
+import com.ltu.fm.model.friend.FriendDAO;
+
 
 public class SearchAction extends AbstractLambdaAction{
 	//private LambdaLogger logger;
@@ -34,7 +35,7 @@ public class SearchAction extends AbstractLambdaAction{
 	public String handle(JsonObject request, Context lambdaContext) throws BadRequestException, InternalErrorException {
         //logger = lambdaContext.getLogger();
 
-        SearchUserRequest input = getGson().fromJson(request, SearchUserRequest.class);
+        SearchFriendRequest input = getGson().fromJson(request, SearchFriendRequest.class);
 
         if (input == null ||
                 input.getQuery() == null ||
@@ -42,11 +43,11 @@ public class SearchAction extends AbstractLambdaAction{
             throw new BadRequestException(ExceptionMessages.EX_INVALID_INPUT);
         }
 
-        UserDAO dao = DAOFactory.getUserDAO();
+        FriendDAO dao = DAOFactory.getFriendDAO();
 
-        List<User> list = dao.search(input.getQuery(), input.getLimit(), input.getCursor(), DynamoDBConfiguration.USER_EMAIL_INDEX);
+        List<Friend> list = dao.search(input.getQuery(), input.getLimit(), input.getCursor(), DynamoDBConfiguration.USER_ID_INDEX);
 
-        SearchUserResponse output = new SearchUserResponse();
+        SearchFriendResponse output = new SearchFriendResponse();
         output.setItems(list);
 
         return getGson().toJson(output);

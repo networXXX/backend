@@ -51,9 +51,10 @@ public class InitDao {
 	public static void initTables() {
 		try {
 
-			deleteTable(DynamoDBConfiguration.USERS_TABLE_NAME);
-			deleteTable(DynamoDBConfiguration.USER_POINT_TABLE_NAME);
-			deleteTable(DynamoDBConfiguration.LOCATION_TABLE_NAME);
+//			deleteTable(DynamoDBConfiguration.USERS_TABLE_NAME);
+//			deleteTable(DynamoDBConfiguration.USER_POINT_TABLE_NAME);
+//			deleteTable(DynamoDBConfiguration.LOCATION_TABLE_NAME);
+			deleteTable(DynamoDBConfiguration.FRIENDS_TABLE_NAME);
 			
 //			// //
 //			// // // Parameter1: table name // Parameter2: reads per second //
@@ -62,9 +63,10 @@ public class InitDao {
 //			// // // data type
 //			// // // Parameter6/7: sort key and data type (if applicable)
 //
-			createTable(DynamoDBConfiguration.USERS_TABLE_NAME, 10L, 2L, "id", "S", null, null);
-			createTable(DynamoDBConfiguration.LOCATION_TABLE_NAME, 10L, 2L, "id", "S", null, null);
-			createGeoTable(DynamoDBConfiguration.USER_POINT_TABLE_NAME, 10L, 10L);
+//			createTable(DynamoDBConfiguration.USERS_TABLE_NAME, 10L, 2L, "id", "S", null, null);
+//			createTable(DynamoDBConfiguration.LOCATION_TABLE_NAME, 10L, 2L, "id", "S", null, null);
+//			createGeoTable(DynamoDBConfiguration.USER_POINT_TABLE_NAME, 10L, 10L);
+			createTable(DynamoDBConfiguration.FRIENDS_TABLE_NAME, 10L, 2L, "id", "S", null, null);
 
 		} catch (Exception e) {
 			// log.error(e.getMessage(), e.getCause());

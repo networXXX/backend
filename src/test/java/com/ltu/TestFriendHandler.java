@@ -18,7 +18,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-public class TestDeviceHandler extends TestCase {
+public class TestFriendHandler extends TestCase {
 
 	/**
 	 * Create the test case
@@ -26,7 +26,7 @@ public class TestDeviceHandler extends TestCase {
 	 * @param testName
 	 *            name of the test case
 	 */
-	public TestDeviceHandler(String testName) {
+	public TestFriendHandler(String testName) {
 		super(testName);
 	}
 
@@ -34,7 +34,7 @@ public class TestDeviceHandler extends TestCase {
 	 * @return the suite of tests being tested
 	 */
 	public static Test suite() {
-		return new TestSuite(TestDeviceHandler.class);
+		return new TestSuite(TestFriendHandler.class);
 	}
 	
 	/**
@@ -54,8 +54,8 @@ public class TestDeviceHandler extends TestCase {
 	 * Rigourous Test :-)
 	 */
 	public void testApp() {
-		//Context context = createContext();
-		//TestUtils.callAPI(context, "device.input.json", "device.output.json");
+		Context context = createContext();
+		TestUtils.callAPI(context, "friend.input.json", "friend.output.json");
 		assertTrue(true);
 	}
 	

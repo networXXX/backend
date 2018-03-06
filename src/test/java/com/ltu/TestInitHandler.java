@@ -12,6 +12,8 @@
  */
 package com.ltu;
 
+import com.ltu.fm.dao.InitDao;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

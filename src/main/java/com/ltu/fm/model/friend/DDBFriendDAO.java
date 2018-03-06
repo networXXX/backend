@@ -133,7 +133,7 @@ public class DDBFriendDAO extends AbstractDao<Friend> implements FriendDAO {
 
 	@Override
 	public Friend findByFriend(String friendId, String otherId) {
-		List<Friend> list = search("email:" + friendId + Constants.AND_STRING + "otherId:" + otherId, 1, null, DynamoDBConfiguration.USER_ID_INDEX);
+		List<Friend> list = search("userId:" + friendId + Constants.AND_STRING + "otherId:" + otherId, 1, null, DynamoDBConfiguration.USER_ID_INDEX);
 		if (list != null && !list.isEmpty()) {
 			return list.get(0);
 		}
@@ -153,7 +153,7 @@ public class DDBFriendDAO extends AbstractDao<Friend> implements FriendDAO {
 		if (cursor == null || cursor.trim().equals(Constants.EMPTY_STRING)) {
 			return null;
 		}
-		if (DynamoDBConfiguration.USER_EMAIL_INDEX.equals(indexStr)) {
+		if (DynamoDBConfiguration.USER_ID_INDEX.equals(indexStr)) {
 			return buildEmailIndex(cursor);
 		}
 		Map<String, AttributeValue> exclusiveStartKey = new HashMap<String, AttributeValue>();
@@ -170,7 +170,7 @@ public class DDBFriendDAO extends AbstractDao<Friend> implements FriendDAO {
 	}
 
 	private ScanRequest buildScan(String query, int limit, String indexStr) {
-		ScanRequest scanRequest = new ScanRequest(DynamoDBConfiguration.USERS_TABLE_NAME);
+		ScanRequest scanRequest = new ScanRequest(DynamoDBConfiguration.FRIENDS_TABLE_NAME);
 		
 		if (indexStr != null) {
 			scanRequest.setIndexName(indexStr);
@@ -180,32 +180,22 @@ public class DDBFriendDAO extends AbstractDao<Friend> implements FriendDAO {
 			HashMap<String, Condition> scanFilter = new HashMap<String, Condition>();
 			String[] fields = query.split(Constants.AND_STRING);
 			for (String field : fields) {
-				if (field.indexOf("email:") != -1) {
+				if (field.indexOf("userId:") != -1) {
 					String[] array = field.split(":");
 					Condition condition = new Condition().withComparisonOperator(ComparisonOperator.EQ.toString())
 							.withAttributeValueList(new AttributeValue().withS(array[1]));
-					scanFilter.put("email", condition);
-				} else if (field.indexOf("pmCode:") != -1) {
+					scanFilter.put("userId", condition);
+				} else if (field.indexOf("otherId:") != -1) {
 					String[] array = field.split(":");
 					Condition condition = new Condition().withComparisonOperator(ComparisonOperator.EQ.toString())
 							.withAttributeValueList(new AttributeValue().withS(array[1]));
-					scanFilter.put("pmCode", condition);
-				} else if (field.indexOf("activateCode:") != -1) {
-					String[] array = field.split(":");
-					Condition condition = new Condition().withComparisonOperator(ComparisonOperator.EQ.toString())
-							.withAttributeValueList(new AttributeValue().withS(array[1]));
-					scanFilter.put("activateCode", condition);
+					scanFilter.put("otherId", condition);
 				} else if (field.indexOf("status:") != -1) {
 					String[] array = field.split(":");
 					Condition condition = new Condition().withComparisonOperator(ComparisonOperator.EQ.toString())
 							.withAttributeValueList(new AttributeValue().withS(array[1]));
 					scanFilter.put("status", condition);
-				} else if (field.indexOf("type:") != -1) {
-					String[] array = field.split(":");
-					Condition condition = new Condition().withComparisonOperator(ComparisonOperator.EQ.toString())
-							.withAttributeValueList(new AttributeValue().withS(array[1]));
-					scanFilter.put("type", condition);
-				}
+				} 
 			}
 
 			scanRequest.withScanFilter(scanFilter);

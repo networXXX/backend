@@ -21,10 +21,10 @@ import com.ltu.fm.dao.factory.DAOFactory;
 import com.ltu.fm.exception.BadRequestException;
 import com.ltu.fm.exception.DAOException;
 import com.ltu.fm.exception.InternalErrorException;
-import com.ltu.fm.model.action.location.LocationResponse;
-import com.ltu.fm.model.action.location.UpdateLocationRequest;
-import com.ltu.fm.model.location.Location;
-import com.ltu.fm.model.location.LocationDAO;
+import com.ltu.fm.model.action.friend.FriendResponse;
+import com.ltu.fm.model.action.friend.UpdateFriendRequest;
+import com.ltu.fm.model.friend.Friend;
+import com.ltu.fm.model.friend.FriendDAO;
 
 public class UpdateAction extends AbstractLambdaAction{
 	private LambdaLogger logger;
@@ -33,7 +33,7 @@ public class UpdateAction extends AbstractLambdaAction{
 	public String handle(JsonObject request, Context lambdaContext) throws BadRequestException, InternalErrorException {
         logger = lambdaContext.getLogger();
 
-        UpdateLocationRequest input = getGson().fromJson(request, UpdateLocationRequest.class);
+        UpdateFriendRequest input = getGson().fromJson(request, UpdateFriendRequest.class);
 
         if (input == null ||
                 input.getId() == null ||
@@ -46,29 +46,35 @@ public class UpdateAction extends AbstractLambdaAction{
                 input.getUserId().trim().equals("")) {
             throw new BadRequestException(ExceptionMessages.EX_PARAM_USER_ID_REQUIRED);
         }
+        
+        if (input == null ||
+                input.getOtherId() == null ||
+                input.getOtherId().trim().equals("")) {
+            throw new BadRequestException(ExceptionMessages.EX_PARAM_OTHER_ID_REQUIRED);
+        }
 
-        LocationDAO dao = DAOFactory.getLocationDAO();
+        FriendDAO dao = DAOFactory.getFriendDAO();
 
-        Location updateLocation;
+        Friend updateFriend;
 
         try {
-        	updateLocation = dao.find(input.getId());
-        	updateLocation.setUserId(input.getUserId());
-            updateLocation.setLat(input.getLat());
-            updateLocation.setLng(input.getLng());
-        	updateLocation = dao.update(updateLocation);
+        	updateFriend = dao.find(input.getId());
+        	updateFriend.setUserId(input.getUserId());
+        	updateFriend.setOtherId(input.getOtherId());
+        	updateFriend.setStatus(input.getStatus());
+        	updateFriend = dao.update(updateFriend);
         } catch (final DAOException e) {
-            logger.log("Error while creating new device\n" + e.getMessage());
+            logger.log("Error while updating friend\n" + e.getMessage());
             throw new InternalErrorException(ExceptionMessages.EX_DAO_ERROR);
         }
 
-        if (updateLocation.getId() == null || updateLocation.getId().trim().equals("")) {
-            logger.log("LocationID is null or empty");
+        if (updateFriend.getId() == null || updateFriend.getId().trim().equals("")) {
+            logger.log("FriendID is null or empty");
             throw new InternalErrorException(ExceptionMessages.EX_DAO_ERROR);
         }
 
-        LocationResponse output = new LocationResponse();
-        output.setItem(updateLocation);
+        FriendResponse output = new FriendResponse();
+        output.setItem(updateFriend);
 
         return getGson().toJson(output);
     }

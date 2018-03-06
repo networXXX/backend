@@ -10,6 +10,7 @@ import com.ltu.fm.exception.BadRequestException;
 import com.ltu.fm.exception.DAOException;
 import com.ltu.fm.exception.InternalErrorException;
 import com.ltu.fm.model.action.friend.DeleteFriendRequest;
+import com.ltu.fm.model.action.friend.DeleteFriendResponse;
 import com.ltu.fm.model.friend.FriendDAO;
 
 
@@ -32,7 +33,7 @@ public class DeleteAction extends AbstractLambdaAction{
         try {
         	dao.delete(input.getId());
         } catch (final DAOException e) {
-            logger.log("Error while creating new device\n" + e.getMessage());
+            logger.log("Error while deleting friend\n" + e.getMessage());
             throw new InternalErrorException(ExceptionMessages.EX_DAO_ERROR);
         }
 
