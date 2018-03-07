@@ -1,6 +1,6 @@
 {
-	"action":"com.ltu.fm.action.friend.DeleteAction",
+	"action":"com.ltu.fm.action.friend.GetAction",
 	"body":{
-		"id": "eabfdd45-1935-48df-8df4-a9f25824b987"
+		"id": "46773504-49eb-4817-9690-3ccccab1c4cc"
 	}
 }

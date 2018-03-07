@@ -26,6 +26,8 @@ import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.amazonaws.services.s3.transfer.TransferManager;
+import com.ltu.fm.model.action.friend.FriendResponse;
+import com.ltu.fm.model.action.friend.InsertFriendRequest;
 import com.ltu.fm.model.action.user.ActivateUserRequest;
 import com.ltu.fm.model.action.user.PutUserPointRequest;
 import com.ltu.fm.model.action.user.QueryRadiusRequest;
@@ -48,7 +50,7 @@ public class Test {
 		// TODO Auto-generated method stub
 		System.out.println("Json schema...");
 		
-		JSONObject schema = new SchemaMapper().toJsonSchema4(QueryUserPointResponse.class, true);
+		JSONObject schema = new SchemaMapper().toJsonSchema4(InsertFriendRequest.class, true);
 		System.out.println(schema.toString());
 		
 		System.out.println(Calendar.getInstance().getTime().getTime());
