@@ -123,6 +123,7 @@ public class LoginWithGoogleAction extends AbstractLambdaAction{
 			encryptedPassword = PasswordHelper.getEncryptedPassword(Constants.PASSWORD_STRING, salt);
 	        user.setPassword(ByteBuffer.wrap(encryptedPassword));
 	        user.setSalt(ByteBuffer.wrap(salt));
+	        user.setSearchText(user.getDisplayName()+user.getEmail());
 			user = dao.insert(user);
 			return user;
 		} catch (final NoSuchAlgorithmException e) {

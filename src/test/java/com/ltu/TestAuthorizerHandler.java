@@ -64,13 +64,13 @@ public class TestAuthorizerHandler extends TestCase {
 	
 	//@org.junit.Test
 	public void testLambdaFunctionHandler() {
-	    APIGatewayAuthorizerHandler handler = new APIGatewayAuthorizerHandler();
-	    Context ctx = createContext();
-	    TokenAuthorizerContext input = new TokenAuthorizerContext("TOKEN", "51f8328a-8f2d-497e-b265-68cd749c73ed:1528161208123:39164c1065f6f479ca26ef73a96da9d0", "arn:aws:execute-api:us-east-1:205631098170:9csrrzydk8/null/GET/");
-	    Object output = handler.handleRequest(input, ctx);
-	    if (output != null) {
-	        System.out.println(output.toString());
-	    }
+//	    APIGatewayAuthorizerHandler handler = new APIGatewayAuthorizerHandler();
+//	    Context ctx = createContext();
+//	    TokenAuthorizerContext input = new TokenAuthorizerContext("TOKEN", "51f8328a-8f2d-497e-b265-68cd749c73ed:1528161208123:39164c1065f6f479ca26ef73a96da9d0", "arn:aws:execute-api:us-east-1:205631098170:9csrrzydk8/null/GET/");
+//	    Object output = handler.handleRequest(input, ctx);
+//	    if (output != null) {
+//	        System.out.println(output.toString());
+//	    }
 	    //Assert.assertEquals("sourcebucket", output);
 	}
 	

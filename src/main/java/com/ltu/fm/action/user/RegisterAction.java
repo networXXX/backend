@@ -91,6 +91,7 @@ public class RegisterAction extends AbstractLambdaAction{
         newUser.setActivateCode(RandomUtil.generateActivationKey(Constants.NUM_COUNT));
         newUser.setStatus(Constants.PENDING_STATUS);
         newUser.setImageUrl(input.getImageUrl());
+        newUser.setSearchText(input.getDisplayName()+input.getEmail());
         try {
         	UserIdentity identity;
 

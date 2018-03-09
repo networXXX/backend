@@ -79,6 +79,10 @@ public class User implements Comparable<User>{
 	@DynamoDBAttribute(attributeName = "lat")
 	@Expose
 	private double lat;
+	
+	/** The search text. */
+	@DynamoDBAttribute(attributeName = "searchText")
+	private String searchText;
 
 	/**
 	 * Instantiates a new user.
@@ -345,6 +349,14 @@ public class User implements Comparable<User>{
 	 */
 	public void setLat(double lat) {
 		this.lat = lat;
+	}
+	
+	public String getSearchText() {
+		return searchText;
+	}
+
+	public void setSearchText(String searchText) {
+		this.searchText = searchText;
 	}
 
 	/**

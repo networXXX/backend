@@ -42,6 +42,7 @@ public class ConvertUtil {
 			user.setDisplayName(item.get("displayName") != null ? item.get("displayName").getS() : null);
 			user.setActivateCode(item.get("activateCode") != null ? item.get("activateCode").getS() : null);
 			user.setImageUrl(item.get("imageUrl") != null ? item.get("imageUrl").getS() : null);
+			user.setSearchText(item.get("searchText") != null ? item.get("searchText").getS() : null);
 			user.setStatus(item.get("status").getS());
 			user.setCreatedAt(item.get("createdAt") != null ? AppUtil.toDate(item.get("createdAt").getS()) : null);
 			user.setCognitoIdentityId(item.get("identityId") != null ? item.get("identityId").getS() : null);

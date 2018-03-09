@@ -34,6 +34,8 @@ import com.ltu.fm.model.action.user.QueryRadiusRequest;
 import com.ltu.fm.model.action.user.QueryUserPointResponse;
 import com.ltu.fm.model.action.user.RegisterUserRequest;
 import com.ltu.fm.model.action.user.RegisterUserResponse;
+import com.ltu.fm.model.action.user.SearchUserRequest;
+import com.ltu.fm.model.action.user.SearchUserResponse;
 import com.ltu.fm.model.action.user.UserResponse;
 
 
@@ -50,7 +52,7 @@ public class Test {
 		// TODO Auto-generated method stub
 		System.out.println("Json schema...");
 		
-		JSONObject schema = new SchemaMapper().toJsonSchema4(InsertFriendRequest.class, true);
+		JSONObject schema = new SchemaMapper().toJsonSchema4(SearchUserRequest.class, true);
 		System.out.println(schema.toString());
 		
 		System.out.println(Calendar.getInstance().getTime().getTime());

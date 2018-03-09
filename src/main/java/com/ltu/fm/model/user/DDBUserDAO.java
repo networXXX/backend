@@ -243,6 +243,11 @@ public class DDBUserDAO extends AbstractDao<User> implements UserDAO {
 					Condition condition = new Condition().withComparisonOperator(ComparisonOperator.EQ.toString())
 							.withAttributeValueList(new AttributeValue().withS(array[1]));
 					scanFilter.put("type", condition);
+				} else if (field.indexOf("searchText:") != -1) {
+					String[] array = field.split(":");
+					Condition condition = new Condition().withComparisonOperator(ComparisonOperator.CONTAINS.toString())
+							.withAttributeValueList(new AttributeValue().withS(array[1]));
+					scanFilter.put("searchText", condition);
 				}
 			}
 
@@ -289,6 +294,11 @@ public class DDBUserDAO extends AbstractDao<User> implements UserDAO {
 					Condition condition = new Condition().withComparisonOperator(ComparisonOperator.EQ.toString())
 							.withAttributeValueList(new AttributeValue().withS(array[1]));
 					dbScanExpression.addFilterCondition("type", condition);
+				} else if (field.indexOf("searchText:") != -1) {
+					String[] array = field.split(":");
+					Condition condition = new Condition().withComparisonOperator(ComparisonOperator.CONTAINS.toString())
+							.withAttributeValueList(new AttributeValue().withS(array[1]));
+					dbScanExpression.addFilterCondition("searchText", condition);
 				}
 			}
 		}
