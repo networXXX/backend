@@ -33,7 +33,7 @@ import com.ltu.fm.model.friend.FriendDAO;
  * <p/>
  * POST to /pets/
  */
-public class RequestAction extends AbstractLambdaAction{
+public class UnfriendAction extends AbstractLambdaAction{
 	private LambdaLogger logger;
 
 	@Override
@@ -60,34 +60,34 @@ public class RequestAction extends AbstractLambdaAction{
         
         FriendDAO dao = DAOFactory.getFriendDAO();
 
-        Friend newFriend = new Friend();
+        Friend friend = dao.findByFriend(input.getUserId(), input.getOtherId());
+        
+        if (friend == null) {
+        	throw new BadRequestException(ExceptionMessages.EX_FRIEND_NOT_FOUND);
+		}
+        
+        if (!Constants.YES_STATUS.equals(friend.getStatus())) {
+        	throw new BadRequestException(ExceptionMessages.EX_CANNOT_UNFRIEND);
+		}
         
         try {
-        	newFriend.setUserId(input.getOtherId());
-        	newFriend.setOtherId(input.getUserId());
-        	newFriend.setStatus(Constants.PENDING_STATUS);
-        	newFriend = dao.insert(newFriend);
-        	
-        	newFriend = new Friend();
-        	newFriend.setUserId(input.getUserId());
-        	newFriend.setOtherId(input.getOtherId());
-        	newFriend.setStatus(Constants.REQUESTING_STATUS);
-        	newFriend = dao.insert(newFriend);
-
+        	Friend friend2 = dao.findByFriend(input.getOtherId(), input.getUserId());
+        	dao.delete(friend.getId());
+        	dao.delete(friend2.getId());
         } catch (final DAOException e) {
-            logger.log("Error while creating new friend\n" + e.getMessage());
+            logger.log("Error while deleting friend\n" + e.getMessage());
             throw new InternalErrorException(ExceptionMessages.EX_DAO_ERROR);
         }
 
-        if (newFriend.getId() == null || newFriend.getId().trim().equals("")) {
+        if (friend.getId() == null || friend.getId().trim().equals("")) {
             logger.log("FriendID is null or empty");
             throw new InternalErrorException(ExceptionMessages.EX_DAO_ERROR);
         }
 
         FriendResponse output = new FriendResponse();
-        output.setItem(newFriend);
+        output.setItem(friend);
 
         return getGson().toJson(output);
-    }
+    }		
 
 }

@@ -23,6 +23,7 @@ import com.ltu.fm.exception.BadRequestException;
 import com.ltu.fm.exception.DAOException;
 import com.ltu.fm.exception.InternalErrorException;
 import com.ltu.fm.model.action.friend.FriendResponse;
+import com.ltu.fm.model.action.friend.InsertFriendRequest;
 import com.ltu.fm.model.action.friend.RequestFriendRequest;
 import com.ltu.fm.model.friend.Friend;
 import com.ltu.fm.model.friend.FriendDAO;
@@ -33,9 +34,9 @@ import com.ltu.fm.model.friend.FriendDAO;
  * <p/>
  * POST to /pets/
  */
-public class RequestAction extends AbstractLambdaAction{
+public class ConfirmAction extends AbstractLambdaAction{
 	private LambdaLogger logger;
-
+	
 	@Override
 	public String handle(JsonObject request, Context lambdaContext) throws BadRequestException, InternalErrorException {
         logger = lambdaContext.getLogger();
@@ -60,34 +61,41 @@ public class RequestAction extends AbstractLambdaAction{
         
         FriendDAO dao = DAOFactory.getFriendDAO();
 
-        Friend newFriend = new Friend();
+        Friend friend = dao.findByFriend(input.getUserId(), input.getOtherId());
+        
+        if (friend == null) {
+        	throw new BadRequestException(ExceptionMessages.EX_FRIEND_NOT_FOUND);
+		}
+        
+        if (!Constants.PENDING_STATUS.equals(friend.getStatus())) {
+        	throw new BadRequestException(ExceptionMessages.EX_CANNOT_CONFIRM_FRIEND);
+		}
+        
+        Friend friend2 = dao.findByFriend(input.getOtherId(), input.getUserId());
         
         try {
-        	newFriend.setUserId(input.getOtherId());
-        	newFriend.setOtherId(input.getUserId());
-        	newFriend.setStatus(Constants.PENDING_STATUS);
-        	newFriend = dao.insert(newFriend);
         	
-        	newFriend = new Friend();
-        	newFriend.setUserId(input.getUserId());
-        	newFriend.setOtherId(input.getOtherId());
-        	newFriend.setStatus(Constants.REQUESTING_STATUS);
-        	newFriend = dao.insert(newFriend);
+        	friend.setStatus(Constants.YES_STATUS);
+        	friend2.setStatus(Constants.YES_STATUS);
+        	friend = dao.update(friend);
+        	dao.update(friend2);
 
         } catch (final DAOException e) {
             logger.log("Error while creating new friend\n" + e.getMessage());
             throw new InternalErrorException(ExceptionMessages.EX_DAO_ERROR);
         }
 
-        if (newFriend.getId() == null || newFriend.getId().trim().equals("")) {
+        if (friend.getId() == null || friend.getId().trim().equals("")) {
             logger.log("FriendID is null or empty");
             throw new InternalErrorException(ExceptionMessages.EX_DAO_ERROR);
         }
 
         FriendResponse output = new FriendResponse();
-        output.setItem(newFriend);
+        output.setItem(friend);
 
         return getGson().toJson(output);
     }
+
+    
 
 }

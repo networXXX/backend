@@ -58,6 +58,7 @@ public class ConvertUtil {
 			friend.setId(item.get("id").getS());
 			friend.setUserId(item.get("userId") != null ? item.get("userId").getS() : null);
 			friend.setOtherId(item.get("otherId") != null ? item.get("otherId").getS() : null);
+			friend.setStatus(item.get("status") != null ? item.get("status").getS() : null);
 			friend.setCreatedAt(item.get("createdAt") != null ? AppUtil.toDate(item.get("createdAt").getS()) : null);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e.getCause());

@@ -33,6 +33,9 @@ public class Constants {
 	/** The pending status. */
 	public static String PENDING_STATUS = "P";
 	
+	/** The requesting status. */
+	public static String REQUESTING_STATUS = "R";
+	
 	/** The yes status. */
 	public static String YES_STATUS = "Y";
 	

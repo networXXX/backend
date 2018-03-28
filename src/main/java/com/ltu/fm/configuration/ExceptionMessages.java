@@ -35,6 +35,8 @@ public class ExceptionMessages {
     public static final String EX_SEND_INVITATION = "Error sending invitation email";
     public static final String EX_USER_NOT_FOUND = "User not found";
     public static final String EX_FRIEND_NOT_FOUND = "Friend not found";
+    public static final String EX_CANNOT_CONFIRM_FRIEND = "Cannot confirm because status is not pending.";
+    public static final String EX_CANNOT_UNFRIEND = "Cannot unfriend because status is not YES.";
     public static final String EX_UPDATE_DEVICE = "Error update device";
     public static final String EX_EMAIL_EXIST = "Email exists.";
     public static final String EX_UPDATE_CONFERENCE = "Error update conference";
@@ -160,4 +162,7 @@ public class ExceptionMessages {
     
     //Location
     public static final String EX_LOCATION_NOT_FOUND = "Location not found.";
+    
+    public static final String EX_USERID_SAME_ORTHERID = "UserId is the same OrtherId.";
+    
 }
