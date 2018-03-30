@@ -1,7 +1,6 @@
 {
-	"action":"com.ltu.fm.action.friend.UnfriendAction",
+	"action":"com.ltu.fm.action.friend.QueryUserAction",
 	"body":{
-		"userId": "5d595b48-6e35-404f-865b-5e1a771ceffc",
-		"otherId": "e4f72be5-3d98-4baf-be43-7be227911ca4"
+		"query": "userId:e4f72be5-3d98-4baf-be43-7be227911ca4&status:P"
 	}
 }

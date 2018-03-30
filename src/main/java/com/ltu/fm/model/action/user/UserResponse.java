@@ -12,6 +12,7 @@
  */
 package com.ltu.fm.model.action.user;
 
+import com.google.gson.annotations.Expose;
 import com.ltu.fm.model.user.User;
 
 /**
@@ -19,6 +20,7 @@ import com.ltu.fm.model.user.User;
  */
 public class UserResponse {
 	
+	@Expose
     private User item;
 
 	public User getItem() {

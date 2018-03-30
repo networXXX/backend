@@ -31,7 +31,7 @@ public class User implements Comparable<User>{
 	private String email;
 
 	/** The password. */
-	@DynamoDBAttribute(attributeName = "password")
+	@DynamoDBAttribute(attributeName = "password")	
 	private ByteBuffer password;
 
 	/** The salt. */

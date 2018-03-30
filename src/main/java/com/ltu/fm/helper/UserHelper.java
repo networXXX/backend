@@ -1,7 +1,9 @@
 package com.ltu.fm.helper;
 
 import com.ltu.fm.constants.Constants;
+import com.ltu.fm.dao.factory.DAOFactory;
 import com.ltu.fm.model.user.User;
+import com.ltu.fm.model.user.UserDAO;
 
 /**
  * The Class UserHelper.
@@ -28,13 +30,17 @@ public class UserHelper {
 
 	/**
 	 * From json.
-	 * 
-	 * @param json
-	 *            the json
+	 *
+	 * @param userId the user id
 	 * @return the user
 	 */
 //	public static User fromJson(JSONObject json) {
 //		return null;
 //	}
+	
+	public static User getUserById(String userId) {
+		UserDAO dao = DAOFactory.getUserDAO();
+		return dao.find(userId);
+	}
 
 }

@@ -12,6 +12,7 @@
  */
 package com.ltu.fm.model.action.user;
 
+import com.google.gson.annotations.Expose;
 import com.ltu.fm.model.user.User;
 
 
@@ -19,21 +20,8 @@ import com.ltu.fm.model.user.User;
  * Bean for the pet creation response.
  */
 public class RegisterUserResponse {
-//	private String id;
-//
-//	public String getId() {
-//		return id;
-//	}
-//
-//	public void setId(String id) {
-//		this.id = id;
-//	}
-//
-//	@Override
-//	public String toString() {
-//		return "UserResponse [id=" + id + "]";
-//	}
 	
+	@Expose
 	private User item;
 
 	public User getItem() {

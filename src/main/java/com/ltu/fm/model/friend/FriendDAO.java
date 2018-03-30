@@ -15,6 +15,7 @@ package com.ltu.fm.model.friend;
 import java.util.List;
 
 import com.ltu.fm.exception.DAOException;
+import com.ltu.fm.model.user.User;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -93,6 +94,17 @@ public interface FriendDAO {
      * @return the list
      */
     List<Friend> search(String query, int limit, String cursor, String indexStr);
+    
+    /**
+     * Query user.
+     *
+     * @param query the query
+     * @param limit the limit
+     * @param cursor the cursor
+     * @param indexStr the index str
+     * @return the list
+     */
+    List<User> queryUser(String query, int limit, String cursor, String indexStr);
     
     /**
      * Mapper scan.

@@ -14,6 +14,7 @@ package com.ltu.fm.model.action.user;
 
 import java.util.List;
 
+import com.google.gson.annotations.Expose;
 import com.ltu.fm.model.user.User;
 
 /**
@@ -21,8 +22,10 @@ import com.ltu.fm.model.user.User;
  */
 public class SearchUserResponse {
 	
+	@Expose
     private List<User> items;
     
+	@Expose
     private String nextPageToken;
 
 	public List<User> getItems() {

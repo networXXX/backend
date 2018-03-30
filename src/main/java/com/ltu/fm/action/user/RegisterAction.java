@@ -125,7 +125,7 @@ public class RegisterAction extends AbstractLambdaAction{
 
         RegisterUserResponse output = new RegisterUserResponse();
         output.setItem(newUser);
-        return getGson().toJson(output);
+        return getGsonExcludeFields().toJson(output);
     }
     
     private void deleteUser(User user) {

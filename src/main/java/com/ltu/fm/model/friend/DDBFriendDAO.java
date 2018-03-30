@@ -31,6 +31,8 @@ import com.ltu.fm.constants.Constants;
 import com.ltu.fm.dao.AbstractDao;
 import com.ltu.fm.exception.DAOException;
 import com.ltu.fm.exception.ErrorCodeDetail;
+import com.ltu.fm.helper.UserHelper;
+import com.ltu.fm.model.user.User;
 import com.ltu.fm.utils.AppUtil;
 import com.ltu.fm.utils.ConvertUtil;
 
@@ -130,6 +132,11 @@ public class DDBFriendDAO extends AbstractDao<Friend> implements FriendDAO {
 		}
 		return scan(query, limit, cursor, indexStr);
 	}
+	
+	@Override
+	public List<User> queryUser(String query, int limit, String cursor, String indexStr) {
+		return scanUser(query, limit, cursor, indexStr);
+	}
 
 	@Override
 	public Friend findByFriend(String friendId, String otherId) {
@@ -139,15 +146,6 @@ public class DDBFriendDAO extends AbstractDao<Friend> implements FriendDAO {
 		}
 		return null;
 	}	
-	
-//	private Map<String, AttributeValue> buildExclusiveStartKey(String cursor) {
-//		if (cursor == null || cursor.trim().equals(Constants.EMPTY_STRING)) {
-//			return null;
-//		}
-//		Map<String, AttributeValue> exclusiveStartKey = new HashMap<String, AttributeValue>();
-//		exclusiveStartKey.put("id", new AttributeValue(cursor));
-//		return exclusiveStartKey;
-//	}
 	
 	private Map<String, AttributeValue> buildExclusiveStartKey(String cursor, String indexStr) {
 		if (cursor == null || cursor.trim().equals(Constants.EMPTY_STRING)) {
@@ -279,6 +277,31 @@ public class DDBFriendDAO extends AbstractDao<Friend> implements FriendDAO {
 
 		return friends;
 	}
+	
+	private List<User> scanUser(String query, int limit, String cursor, String indexStr) {
+		ScanRequest scanRequest = buildScan(query, limit, indexStr);
+		Map<String, AttributeValue> exclusiveStartKey = buildExclusiveStartKey(cursor, indexStr);
+		List<User> items = new ArrayList<User>();
+
+		do {
+			if (exclusiveStartKey != null) {
+				scanRequest.setExclusiveStartKey(exclusiveStartKey);
+			}
+			ScanResult scanResult = client.scan(scanRequest);
+
+			if (scanResult != null && scanResult.getItems().size() > 0) {
+				for (Map<String, AttributeValue> item : scanResult.getItems()) {
+					items.add(UserHelper.getUserById(item.get("userId").getS()));
+					if (limit == items.size()) {
+						return items;
+					}
+				}
+			}
+			exclusiveStartKey = scanResult.getLastEvaluatedKey();
+		} while (exclusiveStartKey != null);
+
+		return items;
+	}
 
 	@Override
 	public List<Friend> mapperScan(String query, int limit, String cursor, String indexStr) {
@@ -290,7 +313,7 @@ public class DDBFriendDAO extends AbstractDao<Friend> implements FriendDAO {
 		PaginatedScanList<Friend> scanList = getMapper().scan(Friend.class, scanExpression);
 		return scanList;
 	}
-
+		
 	/**
 	 * Gets the mapper.
 	 *

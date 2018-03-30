@@ -12,12 +12,14 @@
  */
 package com.ltu.fm.model.action.user;
 
+import com.google.gson.annotations.Expose;
 import com.ltu.fm.model.user.User;
 
 /**
  * Bean for the pet creation response.
  */
 public class DeleteUserResponse {
+	@Expose
     private User item;
 
 	public User getItem() {

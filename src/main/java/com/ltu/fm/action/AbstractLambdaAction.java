@@ -34,6 +34,7 @@ public abstract class AbstractLambdaAction implements NetworkAction {
         		//.setDateFormat(DateFormat.FULL, DateFormat.FULL)
         		.setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
                 .setPrettyPrinting()
+                //.excludeFieldsWithoutExposeAnnotation()
                 .create();
     }
     
@@ -42,7 +43,8 @@ public abstract class AbstractLambdaAction implements NetworkAction {
 	}
     
     protected Gson getGsonExcludeFields() {
-		return new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").excludeFieldsWithoutExposeAnnotation()
+		return new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+				.excludeFieldsWithoutExposeAnnotation()
 				.setPrettyPrinting().create();
     }
 }
