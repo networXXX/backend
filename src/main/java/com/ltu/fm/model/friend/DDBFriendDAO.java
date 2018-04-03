@@ -32,6 +32,7 @@ import com.ltu.fm.dao.AbstractDao;
 import com.ltu.fm.exception.DAOException;
 import com.ltu.fm.exception.ErrorCodeDetail;
 import com.ltu.fm.helper.UserHelper;
+import com.ltu.fm.model.action.user.ListResponse;
 import com.ltu.fm.model.user.User;
 import com.ltu.fm.utils.AppUtil;
 import com.ltu.fm.utils.ConvertUtil;
@@ -131,11 +132,6 @@ public class DDBFriendDAO extends AbstractDao<Friend> implements FriendDAO {
 			return mapperScan(query, limit, cursor, indexStr);
 		}
 		return scan(query, limit, cursor, indexStr);
-	}
-	
-	@Override
-	public List<User> queryUser(String query, int limit, String cursor, String indexStr) {
-		return scanUser(query, limit, cursor, indexStr);
 	}
 
 	@Override
@@ -278,10 +274,13 @@ public class DDBFriendDAO extends AbstractDao<Friend> implements FriendDAO {
 		return friends;
 	}
 	
-	private List<User> scanUser(String query, int limit, String cursor, String indexStr) {
+	
+	@Override
+	public ListResponse<User> queryUser(String query, int limit, String cursor, String indexStr) {
 		ScanRequest scanRequest = buildScan(query, limit, indexStr);
 		Map<String, AttributeValue> exclusiveStartKey = buildExclusiveStartKey(cursor, indexStr);
-		List<User> items = new ArrayList<User>();
+		ListResponse<User> items = new ListResponse<User>();
+		List<User> users = new ArrayList<User>();
 
 		do {
 			if (exclusiveStartKey != null) {
@@ -291,14 +290,17 @@ public class DDBFriendDAO extends AbstractDao<Friend> implements FriendDAO {
 
 			if (scanResult != null && scanResult.getItems().size() > 0) {
 				for (Map<String, AttributeValue> item : scanResult.getItems()) {
-					items.add(UserHelper.getUserById(item.get("userId").getS()));
-					if (limit == items.size()) {
+					users.add(UserHelper.getUserById(item.get("userId").getS()));
+					if (limit == users.size()) {
 						return items;
 					}
 				}
 			}
 			exclusiveStartKey = scanResult.getLastEvaluatedKey();
+			items.setNextPageToken(exclusiveStartKey.get("id").getS());
 		} while (exclusiveStartKey != null);
+		
+		items.setItems(users);
 
 		return items;
 	}

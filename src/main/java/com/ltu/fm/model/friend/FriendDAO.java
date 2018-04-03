@@ -1,10 +1,10 @@
 /*
- * Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017 ltu.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance
  * with the License. A copy of the License is located at
  *
- * http://aws.amazon.com/apache2.0/
+ * http://ltu.com/apache2.0/
  *
  * or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
  * OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
@@ -15,6 +15,7 @@ package com.ltu.fm.model.friend;
 import java.util.List;
 
 import com.ltu.fm.exception.DAOException;
+import com.ltu.fm.model.action.user.ListResponse;
 import com.ltu.fm.model.user.User;
 
 // TODO: Auto-generated Javadoc
@@ -96,17 +97,6 @@ public interface FriendDAO {
     List<Friend> search(String query, int limit, String cursor, String indexStr);
     
     /**
-     * Query user.
-     *
-     * @param query the query
-     * @param limit the limit
-     * @param cursor the cursor
-     * @param indexStr the index str
-     * @return the list
-     */
-    List<User> queryUser(String query, int limit, String cursor, String indexStr);
-    
-    /**
      * Mapper scan.
      *
      * @param query the query
@@ -125,5 +115,17 @@ public interface FriendDAO {
      * @return the list
      */
     public List<Friend> scan(String query, int limit, String cursor, String indexStr);
+    
+    
+    /**
+     * Scan user.
+     *
+     * @param query the query
+     * @param limit the limit
+     * @param cursor the cursor
+     * @param indexStr the index str
+     * @return the list
+     */
+    public ListResponse<User> queryUser(String query, int limit, String cursor, String indexStr);
 }
 

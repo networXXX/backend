@@ -10,46 +10,34 @@
  * OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
  * and limitations under the License.
  */
-package com.ltu.fm.dao;
+package com.ltu.fm.model.action.user;
 
-/**
- * The Interface Dao.
- *
- * @param <T> the generic type
- */
-public interface Dao<T> {
-	
+import java.util.List;
 
-	/**
-	 * Find.
-	 *
-	 * @param id the id
-	 * @return the t
-	 */
-	T find(String id);
-	
-	/**
-	 * Gets the.
-	 *
-	 * @param id the id
-	 * @return the t
-	 */
-	T get(String id);
+import com.google.gson.annotations.Expose;
 
-	/**
-	 * Insert.
-	 *
-	 * @param t the t
-	 * @return the t
-	 */
-	T save(T t);
+public class ListResponse<T> {
 	
-	/**
-	 * Delete.
-	 *
-	 * @param t the t
-	 */
-	void delete(T t);
-	
+	@Expose
+    private List<T> items;
+    
+	@Expose
+    private String nextPageToken;
+
+	public List<T> getItems() {
+		return items;
+	}
+
+	public void setItems(List<T> items) {
+		this.items = items;
+	}
+
+	public String getNextPageToken() {
+		return nextPageToken;
+	}
+
+	public void setNextPageToken(String nextPageToken) {
+		this.nextPageToken = nextPageToken;
+	}
 
 }

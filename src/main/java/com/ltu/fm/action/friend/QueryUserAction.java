@@ -12,8 +12,6 @@
  */
 package com.ltu.fm.action.friend;
 
-import java.util.List;
-
 import com.amazonaws.services.lambda.runtime.Context;
 import com.google.gson.JsonObject;
 import com.ltu.fm.action.AbstractLambdaAction;
@@ -23,6 +21,7 @@ import com.ltu.fm.dao.factory.DAOFactory;
 import com.ltu.fm.exception.BadRequestException;
 import com.ltu.fm.exception.InternalErrorException;
 import com.ltu.fm.model.action.friend.SearchFriendRequest;
+import com.ltu.fm.model.action.user.ListResponse;
 import com.ltu.fm.model.action.user.SearchUserResponse;
 import com.ltu.fm.model.friend.FriendDAO;
 import com.ltu.fm.model.user.User;
@@ -45,10 +44,11 @@ public class QueryUserAction extends AbstractLambdaAction{
 
         FriendDAO dao = DAOFactory.getFriendDAO();
 
-        List<User> list = dao.queryUser(input.getQuery(), input.getLimit(), input.getCursor(), DynamoDBConfiguration.USER_ID_INDEX);
+        ListResponse<User> user = dao.queryUser(input.getQuery(), input.getLimit(), input.getCursor(), DynamoDBConfiguration.USER_ID_INDEX);
 
         SearchUserResponse output = new SearchUserResponse();
-        output.setItems(list);
+        output.setItems(user.getItems());
+        output.setNextPageToken(user.getNextPageToken());
 
         return getGsonExcludeFields().toJson(output);
     }
