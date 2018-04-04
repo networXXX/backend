@@ -1,5 +1,5 @@
 {
-	"action":"com.ltu.fm.action.friend.QueryUserAction",
+	"action":"com.ltu.fm.action.friend.SearchAction",
 	"body":{
 		"query": "userId:e4f72be5-3d98-4baf-be43-7be227911ca4&status:P"
 	}
