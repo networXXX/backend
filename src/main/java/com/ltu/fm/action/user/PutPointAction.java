@@ -55,7 +55,7 @@ public class PutPointAction extends AbstractLambdaAction{
         UserResponse output = new UserResponse();
         output.setItem(updateUser);
 
-        return getGson().toJson(output);
+        return getGsonExcludeFields().toJson(output);
     }
 
 }

@@ -36,8 +36,8 @@ public class ConvertUtil {
 		try {
 			user.setId(item.get("id").getS());
 			user.setEmail(item.get("email") != null ? item.get("email").getS() : null);
-			//user.setPassword(item.get("password") != null ? item.get("password").getB() : null);
-			//user.setSalt(item.get("salt") != null ? item.get("salt").getB() : null);
+			user.setPassword(item.get("password") != null ? item.get("password").getB() : null);
+			user.setSalt(item.get("salt") != null ? item.get("salt").getB() : null);
 			user.setType(item.get("type") != null ? item.get("type").getS() : null);
 			user.setDisplayName(item.get("displayName") != null ? item.get("displayName").getS() : null);
 			user.setActivateCode(item.get("activateCode") != null ? item.get("activateCode").getS() : null);
