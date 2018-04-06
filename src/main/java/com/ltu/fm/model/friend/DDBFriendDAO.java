@@ -290,7 +290,7 @@ public class DDBFriendDAO extends AbstractDao<Friend> implements FriendDAO {
 
 			if (scanResult != null && scanResult.getItems().size() > 0) {
 				for (Map<String, AttributeValue> item : scanResult.getItems()) {
-					users.add(UserHelper.getUserById(item.get("userId").getS()));
+					users.add(UserHelper.getUserById(item.get("otherId").getS()));
 					if (limit == users.size()) {
 						items.setNextPageToken(exclusiveStartKey.get("id").getS());
 						return items;
