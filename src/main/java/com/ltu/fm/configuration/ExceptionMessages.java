@@ -82,23 +82,20 @@ public class ExceptionMessages {
     public static final String EX_PARAM_EMAIL_NOT_EXIST_OR_ACTIVATED = "Email not exist or activated";
     public static final String EX_PARAM_DISPLAYED_NAME_REQUIRED = "DisplayedName required";
     public static final String EX_PARAM_TOKEN_REQUIRED = "Token required";
-    
     public static final String EX_PARAM_LOGIN_WITH_FACEBOOK_OR_GOOGLE = "User login with facebook or google";
-    
     public static final String EX_PARAM_EMAIL_INVALID = " Email invalid";
-    
     public static final String EX_AUTHENTICATE_GOOGLE = "Error authenticate google";
     public static final String EX_AUTHENTICATE_FACEBOOK = "Error authenticate facebook";
-    
     public static final String EX_PARAM_FACEBOOK_ID_REQUIRED = "Facebook Id required";
     public static final String EX_PARAM_GOOGLE_ID_REQUIRED = "Google Id required";
     public static final String EX_PARAM_ID_REQUIRED = "Id required";
-    
     public static final String EX_PARAM_EMAIL_NOT_FOUND = " not found. please add contact first.";
     public static final String EX_PARAM_PASSWORD_REQUIRED = "Password required";
     public static final String EX_EMAIL_INVALID = "Email invalid";
     public static final String EX_PARAM_CHANGE_KEY_REQUIRED = "Change Key required";
     public static final String EX_CHANGE_KEY_INVALID = "Change Key invalid";
+    public static final String EX_NO_PERMISSION = "No permission to execute.";
+    public static final String EX_INVALID_AUTHORIZATION = "Invalid authorization.";
     
     //Conference
     public static final String EX_PARAM_CONFERENCE_ID_REQUIRED = "Conference Id required";

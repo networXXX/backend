@@ -3,40 +3,15 @@
  */
 package com.ltu.fm.utils;
 
-import java.io.InputStream;
-import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.SimpleTimeZone;
-import java.util.TreeMap;
 
 import org.json.JSONObject;
 
-import pl.zientarski.SchemaMapper;
+import com.ltu.fm.model.action.user.UpdateLocationRequest;
 
-import com.amazonaws.auth.BasicSessionCredentials;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.ObjectListing;
-import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.services.s3.model.S3ObjectSummary;
-import com.amazonaws.services.s3.transfer.TransferManager;
-import com.ltu.fm.model.action.friend.FriendResponse;
-import com.ltu.fm.model.action.friend.InsertFriendRequest;
-import com.ltu.fm.model.action.user.ActivateUserRequest;
-import com.ltu.fm.model.action.user.PutUserPointRequest;
-import com.ltu.fm.model.action.user.QueryRadiusRequest;
-import com.ltu.fm.model.action.user.QueryUserPointResponse;
-import com.ltu.fm.model.action.user.RegisterUserRequest;
-import com.ltu.fm.model.action.user.RegisterUserResponse;
-import com.ltu.fm.model.action.user.SearchUserRequest;
-import com.ltu.fm.model.action.user.SearchUserResponse;
-import com.ltu.fm.model.action.user.UserResponse;
+import pl.zientarski.SchemaMapper;
 
 
 /**
@@ -52,7 +27,7 @@ public class Test {
 		// TODO Auto-generated method stub
 		System.out.println("Json schema...");
 		
-		JSONObject schema = new SchemaMapper().toJsonSchema4(SearchUserRequest.class, true);
+		JSONObject schema = new SchemaMapper().toJsonSchema4(UpdateLocationRequest.class, true);
 		System.out.println(schema.toString());
 		
 		System.out.println(Calendar.getInstance().getTime().getTime());
