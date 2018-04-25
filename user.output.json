@@ -1,0 +1,25 @@
+{
+  "token": "e4f72be5-3d98-4baf-be43-7be227911ca4:1532388335688:3a1079af3dced7213ef5cdc5f0026bb6",
+  "expires": 1532388335688,
+  "type": "U",
+  "item": {
+    "id": "e4f72be5-3d98-4baf-be43-7be227911ca4",
+    "email": "letruonguyphu@gmail.com",
+    "displayName": "Phu Test",
+    "type": "U",
+    "status": "Y",
+    "createdAt": "2018-03-09T01:29:31Z",
+    "lng": 0.0,
+    "lat": 0.0
+  },
+  "auth": {
+    "identityId": "us-east-1:879e24fb-2f6e-4b62-b41e-56aa03b8b60b",
+    "token": "eyJraWQiOiJ1cy1lYXN0LTExIiwidHlwIjoiSldTIiwiYWxnIjoiUlM1MTIifQ.eyJzdWIiOiJ1cy1lYXN0LTE6ODc5ZTI0ZmItMmY2ZS00YjYyLWI0MWUtNTZhYTAzYjhiNjBiIiwiYXVkIjoidXMtZWFzdC0xOmQwMTc1YzJiLWNhMmEtNDM5Yi1iNTBhLTY3NTI1MzgxMDVlOSIsImFtciI6WyJhdXRoZW50aWNhdGVkIiwiY29tLmx0dS5mbSIsImNvbS5sdHUuZm06dXMtZWFzdC0xOmQwMTc1YzJiLWNhMmEtNDM5Yi1iNTBhLTY3NTI1MzgxMDVlOTpsZXRydW9uZ3V5cGh1QGdtYWlsLmNvbSJdLCJpc3MiOiJodHRwczovL2NvZ25pdG8taWRlbnRpdHkuYW1hem9uYXdzLmNvbSIsImV4cCI6MTUyNDYxMzI1NywiaWF0IjoxNTI0NjEyMzU3fQ.Fm_IqcN_r9wsgaVJ80EqcVHD_0Q46lQa2JvoKIaWHROmxbbl6dixdG7rkWZQ7Fh8xvrF5GYocDmU2KAZE_ctOzGUsW8C_9DZjnyUcOl4aISW1s8fimiXtz6yBw1u6zAfgajau0It7VLUbYz-NdP-SCYq3q-LoBRi1eZV12tylVPkyFXlA5rCfUU1-ozrJW3fxFYEmfkV-kPC260lOQKEb1rwR4APS2geZNEPdFMVnozNzjjHDiYM3C532HUdPAUSrdluGGtrdln-IX38TuMJ3unQu6AfO5oLTrsWD-R6BeY3yQt3FtB76PZJkXvA_7WdGIbvmye9nrOQGCSoO9_9Dg",
+    "credentials": {
+      "accessKey": "ASIAJ64WU7FBBFXVAA3A",
+      "secretKey": "hY/vx2TD4qAorIj3jVD6lq3og7ONUK35/IQlObx8",
+      "sessionToken": "AgoGb3JpZ2luECMaCXVzLWVhc3QtMSKAApy4Slap0gDBhDmhbBBZV886ZnzM/cZV7D0J4EXXPFMcOhbQWlHEtCYXtI6HAZzjJebFDehidVcFTvBNeJbVZgAyh3cFwuVIFVjOOdLKdkyJ8uYzYBrxMhIlegujfHaJe8HuA3dP5uhTdq9Lreo8wgto0Prw57mIMpxCeZGkJs35vjWKL8c/2Ras+SEhlQ88WuWJyQt7uC4/zjuv55/Soqe2NXXh9xrwUABk0OfcMCmenKuCuQ/gNDr6Y24piW677MXjBnVO5iyOAi4QQQob8O3K9o7/cjq2W3jiYWz6YGBEZiJI6xw31VianSJAZnsQXckwmxlGUfUNeuMA2jNqyT4q3wQIaRAAGgwyMDU2MzEwOTgxNzAiDDPZiutqRDmKov5OKyq8BLGLt8AyNYWdRFGLRZSDDxYWB7KLZ4evqONY6zhqCC3yrxLO2Xi5A8fZi1AVGGk41EQgfwzkd8QbU6H3l20Ud1aHqXUwIGLHBNX4l4raSou9gqLhuUcGC1p/7JVObRHuN7I+gpMqW9vtr3KQAxRZjPeHv7NgquNYki/SirdUvwVZqMVDrbjoQ3WqytkmHGY/XvE9Zl2rnT1MYbVXEP5iRgTC1EdYCkQdl7qqcGaZLnF/FnSrvjmsWAC6OQoK2deVUMuCb8QJ7T4DFtXWhT1UpWkPxOZwg6C4OSnekvG1n+AM0kpTYJexXN4doKHhwHA3AAv4QsnC3liqyww83HCOmfsPb9uPoQZG73Am8H6rRRwyvOTlQneJQyKePG+CalDNkT/dJO/q5zueGpmB/d6fKHMRitCTkOkOiTK0/xWn6/k/yYwe4eOeAJ/FWOvhht2gSWhP4HgGmsEWStZyBQEb2X2rvKtjLmDjvpDJk85PQNgvAnUYjKR1SLyyAOU4sF/LVwVyqfv37ZHzMbz8Qx8cThz+QtmvXxRkSkwuOKn7iMf8KJptj9ZJ8ESg/OiKTM7QkZu5uKMOJ842bqQnv4fQNfaimoTFY8UcEHgCJzSOvCdE+nW14Y6vIUIsusAiCotufkGKz7dilevg+vo7UYz5UgRIvXrCBdi+ONAqs3YU4ap2ZzT+Nz41uxpFJ7TBk0cX3SypiF6mJqsewjhAMd3ZdF++KuTfjlBCkw2TmBiFbt0NVyQ5OvfI7g6ikoFnMIX6/tYF",
+      "expiration": 1524615957000
+    }
+  }
+}

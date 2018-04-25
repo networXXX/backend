@@ -17,6 +17,11 @@ import com.ltu.fm.model.geo.UserPointDAO;
 
 public class QueryRadiusAction extends AbstractLambdaAction{
 	//private LambdaLogger logger;
+	
+	@Override
+	public String handle(JsonObject request, Context lambdaContext, String token) throws BadRequestException, InternalErrorException {
+		return null;
+	}
 
     public String handle(JsonObject request, Context lambdaContext) throws BadRequestException, InternalErrorException {
         //logger = lambdaContext.getLogger();

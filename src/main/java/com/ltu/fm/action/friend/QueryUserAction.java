@@ -29,6 +29,11 @@ import com.ltu.fm.model.user.User;
 
 public class QueryUserAction extends AbstractLambdaAction{
 	//private LambdaLogger logger;
+	
+	@Override
+	public String handle(JsonObject request, Context lambdaContext, String token) throws BadRequestException, InternalErrorException {
+		return null;
+	}
 
     @Override
 	public String handle(JsonObject request, Context lambdaContext) throws BadRequestException, InternalErrorException {

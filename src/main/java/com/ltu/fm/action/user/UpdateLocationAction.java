@@ -31,6 +31,61 @@ import com.ltu.fm.utils.AppUtil;
 
 public class UpdateLocationAction extends AbstractLambdaAction{
 	private LambdaLogger logger;
+	
+	@Override
+	public String handle(JsonObject request, Context lambdaContext, String token) throws BadRequestException, InternalErrorException {
+		logger = lambdaContext.getLogger();
+
+        UpdateLocationRequest input = getGson().fromJson(request, UpdateLocationRequest.class);
+
+        if (input == null ||
+                input.getUserId() == null ||
+                input.getUserId().trim().equals("")) {
+            throw new BadRequestException(ExceptionMessages.EX_INVALID_INPUT);
+        }
+        
+        if (token == null ||
+        		token.trim().equals("")) {
+        	throw new BadRequestException(ExceptionMessages.EX_INVALID_INPUT);
+        }
+        
+        String principalId = AppUtil.getUserId(token);
+        if (!input.getUserId().equals(principalId)) {
+        	throw new BadRequestException(ExceptionMessages.EX_NO_PERMISSION);
+		}
+        
+        UserPointDAO dao = DAOFactory.getUserPointDAO();
+        UserDAO userDAO = DAOFactory.getUserDAO();
+        User updateUser;
+        
+        updateUser = userDAO.find(input.getUserId());
+        
+        if (updateUser != null) {
+	        if (!TokenProvider.getInstance().validateToken(token, updateUser)) {
+	        	throw new BadRequestException(ExceptionMessages.EX_INVALID_AUTHORIZATION);
+	        }
+	        
+	        try {
+	    		updateUser.setLat(input.getLat());
+	    		updateUser.setLng(input.getLng());
+	    		dao.putUser(updateUser);
+	    		userDAO.update(updateUser);
+	        } catch (final DAOException e) {
+	            logger.log("Error while creating new device\n" + e.getMessage());
+	            throw new InternalErrorException(ExceptionMessages.EX_DAO_ERROR);
+	        }
+	        
+	        if (updateUser.getId() == null || updateUser.getId().trim().equals("")) {
+	            logger.log("UserID is null or empty");
+	            throw new InternalErrorException(ExceptionMessages.EX_DAO_ERROR);
+	        }
+        }
+
+        UserResponse output = new UserResponse();
+        output.setItem(updateUser);
+
+        return getGsonExcludeFields().toJson(output);
+	}
 
     @Override
 	public String handle(JsonObject request, Context lambdaContext) throws BadRequestException, InternalErrorException {
@@ -44,29 +99,13 @@ public class UpdateLocationAction extends AbstractLambdaAction{
             throw new BadRequestException(ExceptionMessages.EX_INVALID_INPUT);
         }
         
-        if (input == null ||
-                input.getAuthorization() == null ||
-                input.getAuthorization().trim().equals("")) {
-        	throw new BadRequestException(ExceptionMessages.EX_INVALID_INPUT);
-        }
-        
-        String principalId = AppUtil.getUserId(input.getAuthorization());
-        if (!input.getUserId().equals(principalId)) {
-        	throw new BadRequestException(ExceptionMessages.EX_NO_PERMISSION);
-		}
-        
         UserPointDAO dao = DAOFactory.getUserPointDAO();
         UserDAO userDAO = DAOFactory.getUserDAO();
         User updateUser;
         
-        
         updateUser = userDAO.find(input.getUserId());
         
         if (updateUser != null) {
-	        if (!TokenProvider.getInstance().validateToken(input.getAuthorization())) {
-	        	throw new BadRequestException(ExceptionMessages.EX_INVALID_AUTHORIZATION);
-	        }
-	        
 	        try {
 	    		updateUser.setLat(input.getLat());
 	    		updateUser.setLng(input.getLng());

@@ -43,6 +43,7 @@ public class RequestRouter {
 	 * @throws BadRequestException the bad request exception
 	 * @throws InternalErrorException the internal error exception
 	 */
+	
 	public static void lambdaHandler(InputStream request, OutputStream response, Context context)
 			throws BadRequestException, InternalErrorException {
 		LambdaLogger logger = context.getLogger();
@@ -95,7 +96,16 @@ public class RequestRouter {
 			body = inputObj.get("body").getAsJsonObject();
 		}
 
-		String output = action.handle(body, context);
+		String token = null;
+		if (inputObj.get("authorization") != null) {
+			token = inputObj.get("authorization").getAsString();
+		}
+		String output = null;
+		if (token != null) {
+			output = action.handle(body, context, token);
+		} else {
+			output = action.handle(body, context);
+		}
 
 		try {
 			IOUtils.write(output, response);

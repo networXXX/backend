@@ -47,4 +47,8 @@ public abstract class AbstractLambdaAction implements NetworkAction {
 				.excludeFieldsWithoutExposeAnnotation()
 				.setPrettyPrinting().create();
     }
+    
+    public void test() {
+    	
+    }
 }

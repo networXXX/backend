@@ -1,10 +1,8 @@
 {
 	"action":"com.ltu.fm.action.user.UpdateLocationAction",
 	"body":{
-	    "radiusInMeter": 10000.0,
 	    "lat": 10.941270, 
 	    "lng": 106.760298,
-	    "userId": "Test",
-	    "authorization": "testtttt222:3:44"
-	    }
+	    "userId": "e4f72be5-3d98-4baf-be43-7be227911ca4"
+	}
 }

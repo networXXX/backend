@@ -1,7 +1,7 @@
 {
 	"action":"com.ltu.fm.action.user.LoginAction",
 	"body":{
-	    "email":"uyphu@yahoo.com",
-	    "password":"12345"
+	    "email":"letruonguyphu@gmail.com",
+	    "password":"Abc@12345"
 	}
 }

@@ -16,6 +16,11 @@ import com.ltu.fm.model.friend.FriendDAO;
 
 public class DeleteAction extends AbstractLambdaAction{
 	private LambdaLogger logger;
+	
+	@Override
+	public String handle(JsonObject request, Context lambdaContext, String token) throws BadRequestException, InternalErrorException {
+		return null;
+	}
 
     public String handle(JsonObject request, Context lambdaContext) throws BadRequestException, InternalErrorException {
         logger = lambdaContext.getLogger();

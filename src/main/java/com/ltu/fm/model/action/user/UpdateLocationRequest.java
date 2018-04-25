@@ -12,12 +12,10 @@
  */
 package com.ltu.fm.model.action.user;
 
-import com.ltu.fm.action.AbstractRequest;
-
 /**
  * The Class InsertDeviceRequest.
  */
-public class UpdateLocationRequest extends AbstractRequest {
+public class UpdateLocationRequest {
 
 	private String userId;
 	private double lng;

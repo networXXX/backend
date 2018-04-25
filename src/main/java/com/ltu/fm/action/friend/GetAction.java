@@ -26,6 +26,11 @@ import com.ltu.fm.model.friend.FriendDAO;
 
 public class GetAction extends AbstractLambdaAction {
 	//private LambdaLogger logger;
+	
+	@Override
+	public String handle(JsonObject request, Context lambdaContext, String token) throws BadRequestException, InternalErrorException {
+		return null;
+	}
 
     @Override
 	public String handle(JsonObject request, Context lambdaContext) throws BadRequestException, InternalErrorException {

@@ -37,4 +37,16 @@ public interface NetworkAction {
      * @throws InternalErrorException This exception should be thrown if an error that is independent from user input happens
      */
     String handle(JsonObject request, Context lambdaContext) throws BadRequestException, InternalErrorException;
+    
+    
+    /**
+     * Handle.
+     *
+     * @param request the request
+     * @param lambdaContext the lambda context
+     * @return the string
+     * @throws BadRequestException the bad request exception
+     * @throws InternalErrorException the internal error exception
+     */
+    String handle(JsonObject request, Context lambdaContext, String token) throws BadRequestException, InternalErrorException;
 }

@@ -17,6 +17,11 @@ import com.ltu.fm.model.user.UserDAO;
 
 public class PutPointAction extends AbstractLambdaAction{
 	private LambdaLogger logger;
+	
+	@Override
+	public String handle(JsonObject request, Context lambdaContext, String token) throws BadRequestException, InternalErrorException {
+		return null;
+	}
 
     public String handle(JsonObject request, Context lambdaContext) throws BadRequestException, InternalErrorException {
         logger = lambdaContext.getLogger();

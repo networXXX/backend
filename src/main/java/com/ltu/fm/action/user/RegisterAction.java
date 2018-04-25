@@ -36,6 +36,11 @@ import com.ltu.fm.utils.RandomUtil;
 public class RegisterAction extends AbstractLambdaAction{
 	private LambdaLogger logger;
 	private CredentialsProvider cognito = ProviderFactory.getCredentialsProvider();
+	
+	@Override
+	public String handle(JsonObject request, Context lambdaContext, String token) throws BadRequestException, InternalErrorException {
+		return null;
+	}
 
     public String handle(JsonObject request, Context lambdaContext) throws BadRequestException, InternalErrorException {
         logger = lambdaContext.getLogger();
