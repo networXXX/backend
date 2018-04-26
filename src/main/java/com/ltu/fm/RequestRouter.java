@@ -101,7 +101,7 @@ public class RequestRouter {
 			token = inputObj.get("authorization").getAsString();
 		}
 		String output = null;
-		if (token != null) {
+		if (token != null && !token.isEmpty()) {
 			output = action.handle(body, context, token);
 		} else {
 			output = action.handle(body, context);
