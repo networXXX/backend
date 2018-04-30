@@ -30,7 +30,7 @@
     <dependency>
          <groupId>com.amazonaws</groupId>
          <artifactId>aws-lambda-java-core</artifactId>
-         <version>1.0.0</version>
+         <version>1.1.0</version>
      </dependency>
      <dependency>
          <groupId>com.amazonaws</groupId>
@@ -150,32 +150,27 @@
 		<artifactId>dynamodb-geo</artifactId>
 		<version>1.0.0</version>
 		<scope>compile</scope>
-<!-- 		<systemPath>${basedir}/libs/dynamodb-geo-1.0.0.jar -->
-<!-- 		</systemPath> -->
 	</dependency>
-<!-- 	<dependency> -->
-<!-- 		<groupId>com.google.common.geometry</groupId> -->
-<!-- 		<artifactId>s2-geometry-java</artifactId> -->
-<!-- 		<version>1.0.0</version> -->
-<!-- 		<scope>compile</scope> -->
-<!-- 		<systemPath>${basedir}/libs/s2-geometry-library/s2-geometry-java.jar -->
-<!-- 		</systemPath> -->
-<!-- 	</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.google.common</groupId> -->
-<!-- 			<artifactId>guava-r09</artifactId> -->
-<!-- 			<version>1.0.0</version> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.amazonaws.geo</groupId> -->
-<!-- 			<artifactId>dynamodb-geo</artifactId> -->
-<!-- 			<version>1.0.0</version> -->
-<!-- 		</dependency> -->
-<!-- 	<dependency> -->
-<!-- 		<groupId>com.google.common.geometry</groupId> -->
-<!-- 		<artifactId>s2-geometry-java</artifactId> -->
-<!-- 		<version>1.0.0</version> -->
-<!-- 	</dependency> -->
+	<dependency>
+	    <groupId>com.amazonaws</groupId>
+	    <artifactId>aws-java-sdk-lambda</artifactId>
+	    <version>1.11.66</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.amazonaws</groupId>
+	    <artifactId>aws-lambda-java-log4j2</artifactId>
+	    <version>1.0.0</version>
+	  </dependency>
+	  <dependency>
+	    <groupId>org.apache.logging.log4j</groupId>
+	    <artifactId>log4j-core</artifactId>
+	    <version>2.8.2</version>
+	  </dependency>
+	  <dependency>
+	    <groupId>org.apache.logging.log4j</groupId>
+	    <artifactId>log4j-api</artifactId>
+	    <version>2.8.2</version>
+	  </dependency>
   </dependencies>
   <build>
       <resources>
@@ -188,32 +183,33 @@
         </resources>
       <pluginManagement>
         <plugins>
-<!--             <plugin> -->
-<!--                 <groupId>org.apache.maven.plugins</groupId> -->
-<!--                 <artifactId>maven-compiler-plugin</artifactId> -->
-<!--                 <version>3.5.1</version> -->
-<!--                 <configuration> -->
-<!--                     <source>1.8</source> -->
-<!--                     <target>1.8</target> -->
-<!--                 </configuration> -->
-<!--             </plugin> -->
-<!--             <plugin> -->
-<!--                 <groupId>org.apache.maven.plugins</groupId> -->
-<!--                 <artifactId>maven-shade-plugin</artifactId> -->
-<!--                 <version>2.3</version> -->
-<!--                 <configuration> -->
-<!--                     <createDependencyReducedPom>false</createDependencyReducedPom> -->
-<!--                 </configuration> -->
-<!--                 <executions> -->
-<!--                     <execution> -->
-<!--                         <phase>package</phase> -->
-<!--                         <goals> -->
-<!--                             <goal>shade</goal> -->
-<!--                         </goals> -->
-<!--                     </execution> -->
-<!--                 </executions> -->
-				
-<!--             </plugin> -->
+        	<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-shade-plugin</artifactId>
+			    <version>2.4.3</version>
+			    <executions>
+			      <execution>
+			        <phase>package</phase>
+			        <goals>
+			          <goal>shade</goal>
+			        </goals>
+			        <configuration>
+			          <transformers>
+			            <transformer
+			                    implementation="com.github.edwgiz.mavenShadePlugin.log4j2CacheTransformer.PluginsCacheFileTransformer">
+			            </transformer>
+			          </transformers>
+			        </configuration>
+			      </execution>
+			    </executions>
+			    <dependencies>
+			      <dependency>
+			        <groupId>com.github.edwgiz</groupId>
+			        <artifactId>maven-shade-plugin.log4j2-cachefile-transformer</artifactId>
+			        <version>2.8.1</version>
+			      </dependency>
+			    </dependencies>
+			  </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>

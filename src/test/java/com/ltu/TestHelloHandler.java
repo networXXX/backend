@@ -12,13 +12,17 @@
  */
 package com.ltu;
 
-import com.amazonaws.services.lambda.runtime.Context;
 
+import com.amazonaws.services.lambda.runtime.Context;
+import com.ltu.fm.auth.HelloHandler;
+
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import com.amazonaws.services.lambda.runtime.LambdaRuntimeInternal;
 
-public class TestUserPointHandler extends TestCase {
+public class TestHelloHandler extends TestCase {
 
 	/**
 	 * Create the test case
@@ -26,7 +30,7 @@ public class TestUserPointHandler extends TestCase {
 	 * @param testName
 	 *            name of the test case
 	 */
-	public TestUserPointHandler(String testName) {
+	public TestHelloHandler(String testName) {
 		super(testName);
 	}
 
@@ -34,7 +38,7 @@ public class TestUserPointHandler extends TestCase {
 	 * @return the suite of tests being tested
 	 */
 	public static Test suite() {
-		return new TestSuite(TestUserPointHandler.class);
+		return new TestSuite(TestHelloHandler.class);
 	}
 	
 	/**
@@ -49,15 +53,19 @@ public class TestUserPointHandler extends TestCase {
 
 		return ctx;
 	}
-
-	/**
-	 * Rigourous Test :-)
-	 */
-	public void testApp() {
-		
-		Context context = createContext();
-		TestUtils.callAPI(context, "userpoint.input.json", "userpoint.output.json");
-		
-		assertTrue(true);
+	
+	
+	//@org.junit.Test
+	public void testLambdaFunctionHandler() {
+	    HelloHandler handler = new HelloHandler();
+	    Context ctx = createContext();
+	    Object output = handler.handleRequest("Phu test.............", ctx);
+	    if (output != null) {
+	        System.out.println(output.toString());
+	    }
+	    Assert.assertEquals(true, true);
 	}
+	
+
+	
 }

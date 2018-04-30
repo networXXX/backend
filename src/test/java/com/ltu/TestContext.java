@@ -1,3 +1,15 @@
+/*
+ * Copyright 2017 ltu.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance
+ * with the License. A copy of the License is located at
+ *
+ * http://ltu.com/apache2.0/
+ *
+ * or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
+ * and limitations under the License.
+ */
 package com.ltu;
 
 import com.amazonaws.services.lambda.runtime.ClientContext;
@@ -22,7 +34,8 @@ public class TestContext implements Context {
     private int memoryLimitInMB = 128;
     private int remainingTimeInMillis = 15000;
 
-    public String getAwsRequestId() {
+    @Override
+	public String getAwsRequestId() {
         return awsRequestId;
     }
 
@@ -30,7 +43,8 @@ public class TestContext implements Context {
         awsRequestId = value;
     }
 
-    public ClientContext getClientContext() {
+    @Override
+	public ClientContext getClientContext() {
         return clientContext;
     }
 
@@ -38,7 +52,8 @@ public class TestContext implements Context {
         clientContext = value;
     }
 
-    public String getFunctionName() {
+    @Override
+	public String getFunctionName() {
         return functionName;
     }
 
@@ -46,7 +61,8 @@ public class TestContext implements Context {
         functionName = value;
     }
 
-    public CognitoIdentity getIdentity() {
+    @Override
+	public CognitoIdentity getIdentity() {
         return identity;
     }
 
@@ -54,7 +70,8 @@ public class TestContext implements Context {
         identity = value;
     }
 
-    public String getLogGroupName() {
+    @Override
+	public String getLogGroupName() {
         return logGroupName;
     }
 
@@ -62,7 +79,8 @@ public class TestContext implements Context {
         logGroupName = value;
     }
 
-    public String getLogStreamName() {
+    @Override
+	public String getLogStreamName() {
         return logStreamName;
     }
 
@@ -70,7 +88,8 @@ public class TestContext implements Context {
         logStreamName = value;
     }
 
-    public LambdaLogger getLogger() {
+    @Override
+	public LambdaLogger getLogger() {
         return logger;
     }
 
@@ -78,7 +97,8 @@ public class TestContext implements Context {
         logger = value;
     }
 
-    public int getMemoryLimitInMB() {
+    @Override
+	public int getMemoryLimitInMB() {
         return memoryLimitInMB;
     }
 
@@ -86,7 +106,8 @@ public class TestContext implements Context {
         memoryLimitInMB = value;
     }
 
-    public int getRemainingTimeInMillis() {
+    @Override
+	public int getRemainingTimeInMillis() {
         return remainingTimeInMillis;
     }
 
@@ -99,8 +120,21 @@ public class TestContext implements Context {
      */
     private static class TestLogger implements LambdaLogger {
 
-        public void log(String message) {
+        @Override
+		public void log(String message) {
             System.err.println(message);
         } 
     }
+
+	@Override
+	public String getFunctionVersion() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getInvokedFunctionArn() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

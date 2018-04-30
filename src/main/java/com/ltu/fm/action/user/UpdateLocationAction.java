@@ -12,8 +12,10 @@
  */
 package com.ltu.fm.action.user;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.amazonaws.services.lambda.runtime.Context;
-import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.google.gson.JsonObject;
 import com.ltu.fm.action.AbstractLambdaAction;
 import com.ltu.fm.auth.TokenProvider;
@@ -30,11 +32,12 @@ import com.ltu.fm.model.user.UserDAO;
 import com.ltu.fm.utils.AppUtil;
 
 public class UpdateLocationAction extends AbstractLambdaAction{
-	private LambdaLogger logger;
+	//private LambdaLogger logger;
+	static final Logger logger = LogManager.getLogger(UpdateLocationAction.class);
 	
 	@Override
 	public String handle(JsonObject request, Context lambdaContext, String token) throws BadRequestException, InternalErrorException {
-		logger = lambdaContext.getLogger();
+		//logger = lambdaContext.getLogger();
 
         UpdateLocationRequest input = getGson().fromJson(request, UpdateLocationRequest.class);
 
@@ -54,6 +57,10 @@ public class UpdateLocationAction extends AbstractLambdaAction{
         	throw new BadRequestException(ExceptionMessages.EX_NO_PERMISSION);
 		}
         
+        logger.debug("TOKEN:" + token);
+        
+        System.out.println("TOKEN:" + token);
+        
         UserPointDAO dao = DAOFactory.getUserPointDAO();
         UserDAO userDAO = DAOFactory.getUserDAO();
         User updateUser;
@@ -71,12 +78,12 @@ public class UpdateLocationAction extends AbstractLambdaAction{
 	    		dao.putUser(updateUser);
 	    		userDAO.update(updateUser);
 	        } catch (final DAOException e) {
-	            logger.log("Error while creating new device\n" + e.getMessage());
+	            logger.error("Error while creating new device\n" + e.getMessage());
 	            throw new InternalErrorException(ExceptionMessages.EX_DAO_ERROR);
 	        }
 	        
 	        if (updateUser.getId() == null || updateUser.getId().trim().equals("")) {
-	            logger.log("UserID is null or empty");
+	            logger.error("UserID is null or empty");
 	            throw new InternalErrorException(ExceptionMessages.EX_DAO_ERROR);
 	        }
         }
@@ -89,7 +96,7 @@ public class UpdateLocationAction extends AbstractLambdaAction{
 
     @Override
 	public String handle(JsonObject request, Context lambdaContext) throws BadRequestException, InternalErrorException {
-        logger = lambdaContext.getLogger();
+        //logger = lambdaContext.getLogger();
 
         UpdateLocationRequest input = getGson().fromJson(request, UpdateLocationRequest.class);
 
@@ -112,12 +119,12 @@ public class UpdateLocationAction extends AbstractLambdaAction{
 	    		dao.putUser(updateUser);
 	    		userDAO.update(updateUser);
 	        } catch (final DAOException e) {
-	            logger.log("Error while creating new device\n" + e.getMessage());
+	            logger.error("Error while creating new device\n" + e.getMessage());
 	            throw new InternalErrorException(ExceptionMessages.EX_DAO_ERROR);
 	        }
 	        
 	        if (updateUser.getId() == null || updateUser.getId().trim().equals("")) {
-	            logger.log("UserID is null or empty");
+	            logger.error("UserID is null or empty");
 	            throw new InternalErrorException(ExceptionMessages.EX_DAO_ERROR);
 	        }
         }
