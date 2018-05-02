@@ -57,9 +57,9 @@ public class UpdateLocationAction extends AbstractLambdaAction{
         	throw new BadRequestException(ExceptionMessages.EX_NO_PERMISSION);
 		}
         
-        logger.debug("TOKEN:" + token);
+        //logger.debug("TOKEN:" + token);
         
-        System.out.println("TOKEN:" + token);
+        //System.out.println("TOKEN:" + token);
         
         UserPointDAO dao = DAOFactory.getUserPointDAO();
         UserDAO userDAO = DAOFactory.getUserDAO();

@@ -22,22 +22,22 @@ import com.ltu.fm.auth.TokenProvider;
 import com.ltu.fm.configuration.ExceptionMessages;
 import com.ltu.fm.dao.factory.DAOFactory;
 import com.ltu.fm.exception.BadRequestException;
-import com.ltu.fm.exception.DAOException;
 import com.ltu.fm.exception.InternalErrorException;
-import com.ltu.fm.model.action.user.DeleteUserRequest;
-import com.ltu.fm.model.action.user.DeleteUserResponse;
+import com.ltu.fm.model.action.user.GetUserRequest;
+import com.ltu.fm.model.action.user.UserResponse;
+import com.ltu.fm.model.user.User;
 import com.ltu.fm.model.user.UserDAO;
 import com.ltu.fm.utils.AppUtil;
 
-public class DeleteAction extends AbstractLambdaAction{
+public class GetAction extends AbstractLambdaAction {
 	//private LambdaLogger logger;
-	static final Logger logger = LogManager.getLogger(DeleteAction.class);
+	static final Logger logger = LogManager.getLogger(GetAction.class);
 	
 	@Override
 	public String handle(JsonObject request, Context lambdaContext, String token) throws BadRequestException, InternalErrorException {
 		//logger = lambdaContext.getLogger();
 
-        DeleteUserRequest input = getGson().fromJson(request, DeleteUserRequest.class);
+        GetUserRequest input = getGson().fromJson(request, GetUserRequest.class);
 
         if (input == null ||
                 input.getId() == null ||
@@ -53,18 +53,16 @@ public class DeleteAction extends AbstractLambdaAction{
         if (!input.getId().equals(userId)) {
         	throw new BadRequestException(ExceptionMessages.EX_NO_PERMISSION);
 		}
-        
+
         UserDAO dao = DAOFactory.getUserDAO();
+        User user = dao.find(input.getId());
 
-        try {
-        	dao.delete(input.getId());
-        } catch (final DAOException e) {
-            logger.error("Error while deleting user\n" + e.getMessage());
-            throw new InternalErrorException(ExceptionMessages.EX_DAO_ERROR);
-        }
+        if (user == null) {
+            throw new InternalErrorException(ExceptionMessages.EX_USER_NOT_FOUND);
+		}
 
-        DeleteUserResponse output = new DeleteUserResponse();
-        output.setItem(null);
+        UserResponse output = new UserResponse();
+        output.setItem(user);
 
         return getGson().toJson(output);
 	}
@@ -73,25 +71,23 @@ public class DeleteAction extends AbstractLambdaAction{
 	public String handle(JsonObject request, Context lambdaContext) throws BadRequestException, InternalErrorException {
         //logger = lambdaContext.getLogger();
 
-        DeleteUserRequest input = getGson().fromJson(request, DeleteUserRequest.class);
+        GetUserRequest input = getGson().fromJson(request, GetUserRequest.class);
 
         if (input == null ||
                 input.getId() == null ||
                 input.getId().trim().equals("")) {
             throw new BadRequestException(ExceptionMessages.EX_INVALID_INPUT);
         }
-
+        
         UserDAO dao = DAOFactory.getUserDAO();
+        User user = dao.find(input.getId());
 
-        try {
-        	dao.delete(input.getId());
-        } catch (final DAOException e) {
-            logger.error("Error while deleting user\n" + e.getMessage());
-            throw new InternalErrorException(ExceptionMessages.EX_DAO_ERROR);
-        }
+        if (user == null) {
+            throw new InternalErrorException(ExceptionMessages.EX_USER_NOT_FOUND);
+		}
 
-        DeleteUserResponse output = new DeleteUserResponse();
-        output.setItem(null);
+        UserResponse output = new UserResponse();
+        output.setItem(user);
 
         return getGson().toJson(output);
     }
